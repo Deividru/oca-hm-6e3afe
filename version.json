@@ -1,10 +1,10 @@
 {
- "version": "2026-11-09 09:35",
- "notas": "Ahora la herramienta se actualiza sola al abrirla.",
- "publicada": "2026-11-09T08:35:30.298Z",
+ "version": "2026-11-09 10:00",
+ "notas": "Nuevo botón «📦 Crear la copia» en Carpeta y archivos: junta en un zip los Excel y la memoria para mandarlos a revisar.",
+ "publicada": "2026-11-09T09:00:18.928Z",
  "app": {
   "file": "app.html",
-  "sha256": "1a72f172f2e2e8466748da55ae26aa5a20d1bcf021185b022a09bf86f1721fd9",
-  "firma": "23w_ExFDy5QIu6PwOlOJleVSj7AFvedlht1rsy-ZGuL6WG9WQFsP8L3qQZY2v3ZwIXhDew1uVO4pg6r3tuO_yg"
+  "sha256": "3a1418cea9ca0dad880bf4238369f3b48f14995ec3fde7943c86f7811c22db17",
+  "firma": "P9tqbR732J1rsqAsn4MADrdsfDEfCpIOKCcfcdMW7cFZyaIwhFP-D4f6LXnVJo4TaGpSgKRuwjuNWRzWMaYj3g"
  }
 }

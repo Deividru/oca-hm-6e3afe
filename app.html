@@ -722,6 +722,7 @@ tr.more-hid{display:none}.more-row td{text-align:center;background:var(--panel2)
 .mostrarw{position:relative;display:inline-block}.mostrarp{position:absolute;right:0;top:36px;z-index:50;width:360px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.2);padding:12px;display:flex;flex-direction:column;gap:8px;text-align:left}
 .mostrarp>small{color:var(--muted)}.mrow{display:flex;gap:10px;align-items:flex-start;padding:6px;border-radius:8px;cursor:pointer}.mrow:hover{background:var(--accent-soft)}.mrow span{display:flex;flex-direction:column;gap:2px}.mrow small{color:var(--muted);font-size:12px;line-height:1.35}.mrow input{margin-top:3px}.mostrarp{max-height:70vh;overflow:auto}.msub{border-top:1px solid var(--line);padding-top:8px;display:flex;flex-direction:column;gap:4px}.msub>small{color:var(--muted)}.msub .mrow{padding:4px 6px}
 .okline{margin:0 0 12px;color:var(--ok);font-size:13px}.okline summary{cursor:pointer}.okline ul{margin:6px 0 0;padding-left:20px;color:var(--muted)}
+.copiap{margin-top:18px}.copiap h3{margin:0 0 6px}
 /* ayuda */
 .goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:18px 0}
 .goal{padding:14px 16px;border-top:4px solid var(--accent)}
@@ -1145,7 +1146,7 @@ const PAGE = 100;
 const T0 = 8 * 60, T1 = 22 * 60;
 const APP_DIR = '_NO_TOCAR_datos_herramienta';
 const SYNC_MS = 10000;
-const APP_VERSION = '2026-11-09 09:35';
+const APP_VERSION = '2026-11-09 10:00';
 const LOCK_MS = 60000;
 const READ_OPTS = { type: 'array', cellFormula: true, cellNF: false, cellHTML: false, cellText: false };
 const SHEET_OCA = 'MASTER HORARIOS PARA UXXI';
@@ -3160,6 +3161,7 @@ async function compareVersions(newer, older, cell) {
 /* Carpeta */
 function renderCarpeta() {
   $('#filesHelp').innerHTML = filesHelpHtml();
+  setTimeout(async () => { const b = $('#copiaBox'); if (b) b.innerHTML = await copiaHtml(); }, 0);
   const el = $('#folderBody');
   if (!canShare()) { el.innerHTML = `<div class="hero"><img class="xano" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE8AAAB0CAYAAAGzjl9+AAAACXBIWXMAAC4jAAAuIwF4pT92AAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAACelJREFUeNq0kEEKgDAMBLd+otL4G9G76Jftt8aTYDFiFd1TCJOQTABQRRpV5h1obefWkiScpGinngt6cAEO/Xg1V4LHLSkaKRp5zQCEfz0+0rPfdKtnnhbX4/fPbAAAAP//YqR9MsMIFnSFx48dZ/j06RNcwsLUEn84FuQVkpYoCAY4TDG6JqzBg+yhpy+eoLqxrrYebwqH+/rqlav4AxKbw7GlIAyFvd29WH2NETOPHz/BGjvUTxQAAAAA//8i2kSqF2YUGYgeOOh8TXWtQeRlaQkZhlUrVzN8+vSJQVpChuHqVTJSGL4cYW5i8f/Ro8fEZyti8iI+OZxebmxuIC8QsdkSHBjyn5igINrLjx49xigHkCs1XHIEi3hsmRVeApETy/iKC7JcCMsVnz5+Is51tMgpAAAAAP//GqKlzdAzEFfVTpSBx48dZ5gzew75FuDKq8j5FZa362rr8eZjvMXXx48fMcRmz5pNMKcwEJOdpMSlcTZoSDJw5YpVcC+am1gQ9C5BA9ENSEpIIuhSglXAx48fMdrr+ADBdHjs2HGGsPAwyqqAR48e4/QaIRfibCOil33I5SLeEpwcV+ArxUkuHI4fO84gIytLetbDBYIDQ7DmIopcyMfHR7/yEGdzHFuykRKXJlitsmCzxNLKkmHHjp0Y5Z6HpztDUUkRZRU9MQUCRZFCtTpFWkKGISQolLxIwVYdrFyxijptm+FX0QMAAAD//+xYTU7CQBh9C9bTJYTSbetMPYYR3BrRrdAbiFujByA9gFZdqwegHMD2Ag1El4CJay5QN07TCrbMTMGf8CXdkLa8zsz3vvde6Z/86794C1CmwiBMevPHAKZjomXcqfoOJYDUYqAmg15rLGZYBUB5FKPXGqAmg+8P1cdTXvGIsWgoTCbT5L4oimLZ+v80w+f2sqswilnHFvOKoiiuV/V4x6S5xkFUH0jZna/FjVlervSduVs7QH7404ENt1bLgATPQVyv6nH3tLuZJuFkvErMovKMVJM4Hafwj6jFQC2GMAiT33qfQnd/r4mjwzaoxTLNlFcVoY4dDGHk2RwA45dRZgSmCZwQgt752cqTR6iLBwNf6bCv4kGUVL937UlTmdt3hWa2lGBVOegbaZLWQVNKkUynM6VBIkQzoisxn89BTSa9esI08/Y+g71rJ/Tg9t2FFXp8eMrIK8MwpMGVYpq8Gw+XF1cgGoFt29A0gmarheOTNsqoiuoLCNEAAHf3t1Jduna5NfT9DIU4HSfZYhmJX/oW542q8esoN77aGvctwL8A8IN9a8lJGIqiN8YxDiG0nRKxboCOCTAmsAPiUGUD6twgYQEkTgHjFDdgIWGMJEzRxGnZAA7MraXl9f36C74mhIRfD+9zP+ecl+k1eKKmVoFT4P4TOCwAvO1k5kZOp7ScqYIzDD155pTW2ZuXZuj3x6OJEGtKBef9QRKPF1bH1ap16N50AQDc58iZAi8j5VcjSU5S/Hwxr+2m07d4qTQvh0zj+c5L5V0xr1FNWZETkSyGDpIZ5GiI8MiUIuTs/NxeqsUmyYCRO8vt8XyJj5xW0GHrbKFiVWC1/oCv70/oD/q/QdfZhvpMIw0lpDBBUn7wfVHCW3i39h57TLErcckAb+oXWw45t2+vu7tiXmMOPdLgUOnxTmdYwJUZPe4NgfnRNP+S/aHdmlqcI0kFL6+TwGvISolQtVzg0EHZHzwFWFESw4l2ucloHG8QFmXRtYIOhmHAfDFLPn35gdzfPQQq381mA61mG1rN9p40Fepn5dVraWHBq9vSHrRyihkcxizWy3Gcnf1uu9Io/jEWvZe7ZEpD8TmepjoOmj8ycFaWwR0dkYNpi9Z4S4OzBXoDFI8bjXp86UsmdQEAzBfzUC4l1TXHC4wL3PB56LaBrBfa5QxBakyoKmER4XjPMklPK96kXLqAWrUeGMXlculKnQhstRbvXYWaalYPqKzMKdXxz+yZayLH1GZZFehcdaS110joCJlqRaWvTIPD9eY1TTMdaKBcp1GAw/PB/s2SiZE7dCwefVKpj5yfDeDtT2MLJWq3KnAKnAIH8MPe9fu0DUThN3QO/0C8pkRmBBFnBeLkDyidKwwrSvYmoYwtoK7FUVlJEGucqF1Lpa74L7hU6mr/A3Ro73p27MQ/7s5nep/kBUUm+nK+9+6973uWXhWmfllFnoIiT5GnyFPkKfIkQdixyVpB+KzzvHA1gUdFS9qVd/nhEho7BhuPb0a4rgutfRMG/SH/f/bEAJ7nBXSLtJAojcKOtrHvbjdSfQfcyqavzVo9VWuauyomCpVKBeZfZ0tjj5zpDOq1P4ba8e0k1T2rCVpCjjMjwr5xSDvS7pgw/zLP1FoSuvJWqcnC18FeK1b6ho3rq9QVnuc9Hey1Iu/dfzvIrSXlrmRLi+nUIYKyLObjKFEufiyzquRYQFVVcuCFrF/MdV3wPR+qmsZ33yo7eQgtYNgfgDNd769od0y4+njFpMVa6iR5fDtJ7/nAEX6jAnf3k4AWVjiK2GjDmsbNWj3R8LaoCL673RAaYYVH27hkerNWzzSrCUdb+uKZDBcebRFaQGu/RYQ0h68Pl4TUae/X2GkE/sbC6i9lVSUJcb7vE410/eVqg56mVZek9Cw0E9KRd/TmiBCnaVokcd3THtRr/7xTvuevHbhj/BU3kfTm0U19DJSaPPvaDqQgoxs7Nq8LI8mI4LN3werJoD94HtGWNmCG55nFff7i/UXsC0vWDXPL4yyVLmC09k2iSmLhFIwDrVfEj3OUtag0J4zx7SQg58KOxrQY9IewUamsFG4aTQOMpkH2y3Xle3z0w9C39ExRmtvKo4XH7Y4Jo88j4aeQpDg7H4J1bMlBHp6shZFFiB+VxtifbHCc2fr39sRA39JB13WyUnMXHHhspHSxMo+nN6vPmFXdUPho84dvD4GVkeVxKAu4kEdXPkQZ0Yro8TInj3ZQFVkuEvGjcT1hiHQYph7vLSN5RTW8w63HUq482umWd55rmlyQTnpF7bPMyaMzdVGbOHadkgh/YpWTPLoSghDivhfZ1zYghAIrP4t1V5okOY/mJMvc/iIqKlyrKo0dg6wIfUuHu/sJsxI5rjiHj2l39xOhAw64pSrffzyQvcd9dGONwkmB0AK6pz0yGpsmzmga8PPXQvhkCO4NoLhVwiqyj27swpJxoU1vhBZgX9swm84Cm3watDsmWMeW8FVWOHlxZ1K6Cpy3JVnqE0b+VOcVlAWFkxcOIDI8jkkhlcQsboiJ7/uBRlKh4h6ZyKNLWFiHnERyZp1YSz3b/448ejQdHjeRBIuM0fpZRds0LzPUNA2G50NxZ9cypCrd097S4b6qVaHZNMDsmNLscdKRV2Yo16MiT5GnyFPkKSjyeOP3AKRa262NoPEDAAAAAElFTkSuQmCC" alt=""><h2>Abre este archivo con Chrome o Edge</h2><p>Este navegador no permite conectar una carpeta.</p></div>`; return; }
   if (!APP.dir && APP.status === 'permiso') {
@@ -3198,6 +3200,7 @@ function renderCarpeta() {
     <p class="basepath">Ruta de la carpeta de trabajo en el disco (para mostrarla completa): <input class="ruta" data-base value="${esc(APP.filesCfg.base || '')}" placeholder="Z:\\ocaeco\\disco\\…"></p>
     <div class="tablewrap"><table class="files"><thead><tr><th>Para</th><th>En uso ahora</th><th>Dónde está (ruta)</th><th>Cambiar</th></tr></thead><tbody>${ROLES.map(roleRow).join('')}</tbody></table></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"><button class="btn" data-act="rename">Cambiar mi nombre (${esc(userName())})</button><button class="btn" data-act="connect">Cambiar la carpeta de trabajo</button>${ontBtn()}<button class="btn" data-act="solomirar">${soloMirar() ? '✏️ Salir de «Solo mirar»' : '👁 Solo mirar (no guardar nada)'}</button><button class="btn" data-act="ref">Rehacer la foto de UXXI</button></div></div>
+    <div id="copiaBox"></div>
     <h2 class="sec">Todos los Excel que hay en la carpeta</h2>
     <div class="panel"><div class="tablewrap"><table><thead><tr><th>Archivo</th><th>Qué es</th><th>Guardado</th></tr></thead><tbody>
       ${APP.files.map(f => `<tr class="${f.hist ? 'excl' : ''}"><td>${esc(f.path)}</td><td>${f.kind ? TYPE[f.kind] : '<small>otro Excel (no lo usa)</small>'}</td><td class="nowrap">${fmtWhen(f.lm)}</td></tr>`).join('')}</tbody></table></div></div>
@@ -3397,6 +3400,62 @@ async function setPausa(role, on) {
   refresh();
 }
 const pausaBtn = r => r === 'oca' || !roleFile(r) ? '' : pausaDe(r) ? `<button class="btn sm" data-pausa="${r}|0">▶ Reanudar avisos</button>` : `<button class="btn sm ghost" data-pausa="${r}|1">⏸ Pausar avisos</button>`;
+
+/* ---------- Copia para revisión: los Excel que usa la herramienta + su memoria, en un zip ---------- */
+// Para que quien revisa la herramienta vea exactamente lo mismo que el equipo en ese momento. Solo se LEE la carpeta.
+// Sin «copias/» (versiones antiguas del Excel, pesan mucho) ni archivos desktop.ini.
+const COPIA_PREF = 'Copia OCA para revision';
+async function crearCopiaRevision() {
+  if (!APP.dir) return toast('Conecta primero la carpeta de trabajo');
+  const btn = $('#copiaBtn'); if (btn) { btn.disabled = true; btn.textContent = 'Preparando la copia…'; }
+  try {
+    const C = XLSX.CFB, z = C.utils.cfb_new(), resumen = { hecha_por: userName(), at: new Date().toISOString(), version: APP_VERSION, archivos: {} };
+    const add = (path, buf) => C.utils.cfb_add(z, path, new Uint8Array(buf));
+    let n = 0, bytes = 0;
+    // 1) el archivo que usa cada papel (esté donde esté), con su nombre
+    const puestos = new Set();
+    for (const role of ROLES) {
+      const src = APP.src && APP.src[role]; if (!src || !src.fh) continue;
+      try { const f = await src.fh.getFile(); if (puestos.has(f.name)) continue; puestos.add(f.name); const b = await f.arrayBuffer(); add(f.name, b); n++; bytes += b.byteLength; resumen.archivos[role] = { nombre: f.name, guardado: new Date(f.lastModified).toISOString(), bytes: b.byteLength }; }
+      catch (e) { resumen.archivos[role] = { error: e.message }; }
+    }
+    // 2) la memoria de la herramienta
+    const walk = async (d, pre) => { for await (const [nm, h] of d.entries()) {
+      if (h.kind === 'directory') { if (!(pre === APP_DIR + '/' && nm === 'copias')) await walk(h, pre + nm + '/'); continue; }
+      if (/^desktop\.ini$|^~\$/i.test(nm)) continue;
+      try { const b = await (await h.getFile()).arrayBuffer(); add(pre + nm, b); n++; bytes += b.byteLength; } catch (e) { /* a medio escribir */ }
+    } };
+    try { await walk(await APP.dir.getDirectoryHandle(APP_DIR), APP_DIR + '/'); } catch (e) { /* sin memoria todavía */ }
+    add('COPIA_PARA_REVISION.json', new TextEncoder().encode(JSON.stringify(resumen, null, 1)));
+    const zip = C.write(z, { type: 'array', fileType: 'zip', compression: true }), nombre = `${COPIA_PREF} ${stampOf(Date.now())}.zip`;
+    // 3) se guarda sola en la carpeta elegida (p. ej. la del Drive) o se descarga
+    let destino = null; try { destino = await idbGet('destCopia'); } catch (e) { /* sin guardar */ }
+    if (destino && await destino.queryPermission({ mode: 'readwrite' }) !== 'granted') { try { if (await destino.requestPermission({ mode: 'readwrite' }) !== 'granted') destino = null; } catch (e) { destino = null; } }
+    if (destino) {
+      const fh = await destino.getFileHandle(nombre, { create: true }), w = await fh.createWritable(); await w.write(zip); await w.close();
+      // se dejan solo las 3 últimas copias en esa carpeta
+      const viejas = []; for await (const [nm, h] of destino.entries()) if (h.kind === 'file' && nm.startsWith(COPIA_PREF) && nm !== nombre) viejas.push(nm);
+      for (const nm of viejas.sort().slice(0, Math.max(0, viejas.length - 2))) { try { await destino.removeEntry(nm); } catch (e) { /* en uso */ } }
+      toast(`Copia guardada en «${destino.name}»: ${n} archivos (${(zip.byteLength / 1048576).toFixed(1)} MB)`);
+    } else {
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([zip], { type: 'application/zip' })); a.download = nombre; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+      toast(`Copia descargada: ${nombre}. Súbela al Drive de revisión.`);
+    }
+    try { localStorage.setItem('uvMasters.ultimaCopia', JSON.stringify({ at: resumen.at, nombre, destino: destino ? destino.name : 'Descargas', n })); } catch (e) { /* sin almacenamiento */ }
+  } catch (e) { toast('No se ha podido hacer la copia: ' + e.message); }
+  finally { if (btn) { btn.disabled = false; btn.textContent = '📦 Crear la copia'; } if (UI.view === 'carpeta') renderCarpeta(); }
+}
+async function elegirDestinoCopia() {
+  try { const d = await window.showDirectoryPicker({ id: 'uvCopia', mode: 'readwrite' }); await idbSet('destCopia', d); toast(`Las copias se guardarán en «${d.name}»`); renderCarpeta(); } catch (e) { /* cancelado */ }
+}
+async function copiaHtml() {
+  let ult = null; try { ult = JSON.parse(localStorage.getItem('uvMasters.ultimaCopia') || 'null'); } catch (e) { /* nada */ }
+  let dest = null; try { dest = await idbGet('destCopia'); } catch (e) { /* nada */ }
+  return `<div class="panel pad copiap"><h3>📦 Copia para revisión</h3>
+    <p class="lead">Junta en un solo archivo los Excel que usa la herramienta y su memoria, tal como están ahora, para mandarlos a quien revisa la herramienta. No cambia nada: solo lee.</p>
+    <p><button class="btn primary" id="copiaBtn" data-act="copia">📦 Crear la copia</button> <button class="btn" data-act="copiadest">${dest ? 'Cambiar dónde se guarda' : 'Guardarla siempre en una carpeta (p. ej. la del Drive)'}</button></p>
+    <small class="muted">${dest ? `Se guarda sola en la carpeta «${esc(dest.name)}» (se dejan las 3 últimas).` : 'Ahora se descarga (carpeta Descargas): luego hay que subirla al Drive. Si eliges la carpeta del Drive, se sube sola.'}${ult ? ` · Última copia: ${fmtWhen(new Date(ult.at).getTime())} en ${esc(ult.destino)}` : ''}</small></div>`;
+}
 
 /* ---------- Usuarios ---------- */
 function renderUsuarios() {
@@ -5273,6 +5332,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (act) {
       const a = act.dataset.act;
       if (a === 'connect') return connectFolder();
+      if (a === 'copia') return crearCopiaRevision();
+      if (a === 'copiadest') return elegirDestinoCopia();
       if (a === 'solomirar') { const on = !soloMirar(); if (!on && !confirm('¿Salir de «Solo mirar»? A partir de ahora la herramienta guardará los cambios en esta carpeta.')) return; try { localStorage.setItem('uvMasters.soloMirar', on ? '1' : '0'); } catch (err) { /* sin almacenamiento */ } return start(APP.dir); }
       if (a === 'reconnect') return reconnectFolder();
       if (a === 'grant') return grantFiles();
