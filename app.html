@@ -1146,7 +1146,7 @@ const PAGE = 100;
 const T0 = 8 * 60, T1 = 22 * 60;
 const APP_DIR = '_NO_TOCAR_datos_herramienta';
 const SYNC_MS = 10000;
-const APP_VERSION = '2026-11-09 10:00';
+const APP_VERSION = '2026-11-09 10:20';
 const LOCK_MS = 60000;
 const READ_OPTS = { type: 'array', cellFormula: true, cellNF: false, cellHTML: false, cellText: false };
 const SHEET_OCA = 'MASTER HORARIOS PARA UXXI';
@@ -2381,9 +2381,20 @@ function erroresExcel() {
 function vigilarErrores() {
   const E = erroresExcel(), now = new Map((APP.xl ? cruces().filter(x => x.nTodo && !x.info && x.goto !== 'uxxi') : []).map(x => [x.corto, { ...x, n: x.nTodo }])), cargados = Object.keys(ARCH).filter(r => roleFile(r)).join(',');
   if (APP.errFiles !== cargados) { APP.errFiles = cargados; APP.errPrev = null; } // se acaba de cargar o quitar un archivo: no es un error nuevo
+  // mientras se guardan varios Excel seguidos (p. ej. examen + cuadrante) no se compara: el paso intermedio no es un error
+  if (APP.guardandoVarios) return E;
   if (APP.errPrev) {
-    const nuevos = [...now.values()].filter(x => x.n > (APP.errPrev.get(x.corto) || 0));
-    if (nuevos.length) addNotice(`<b>⚠ Hay errores nuevos en los Excel</b> desde el último guardado: ${nuevos.map(x => `${esc(ARCH[x.de[0]].nom)}: <b>+${x.n - (APP.errPrev.get(x.corto) || 0)}</b> ${esc(x.corto)}`).join(' · ')}.`, nuevos[0].goto, true);
+    // base = cuántos había antes de que subieran; un error «nuevo» deja de serlo si vuelve a esa cifra (se ha arreglado)
+    APP.errBase = APP.errBase || new Map();
+    for (const x of now.values()) { const antes = APP.errPrev.get(x.corto) || 0; if (x.n > antes && !APP.errBase.has(x.corto)) APP.errBase.set(x.corto, antes); }
+    for (const [k, b] of [...APP.errBase]) if ((now.get(k) ? now.get(k).n : 0) <= b) APP.errBase.delete(k);
+    const nuevos = [...APP.errBase].map(([k, b]) => ({ ...now.get(k), base: b }));
+    const old = APP.notices.find(n => n.kind === 'errNuevos');
+    if (!nuevos.length) { if (old) APP.notices = APP.notices.filter(n => n !== old); }
+    else {
+      const html = `<b>⚠ Hay errores nuevos en los Excel</b> desde el último guardado: ${nuevos.map(x => `${esc(ARCH[x.de[0]].nom)}: <b>+${x.n - x.base}</b> ${esc(x.corto)}`).join(' · ')}. <small>(Si se arreglan, este aviso se quita solo.)</small>`;
+      if (old) { old.html = html; old.link = nuevos[0].goto; } else { addNotice(html, nuevos[0].goto, true); APP.notices.at(-1).kind = 'errNuevos'; }
+    }
   }
   APP.errPrev = new Map([...now.entries()].map(([k, x]) => [k, x.n]));
   return E;
@@ -3913,7 +3924,7 @@ function openExamGrado(ev) {
   egRecheck();
   $('#dlgInfo').showModal();
 }
-function egForm() { return { fecha: $('#egF').value, turno: $('#egT').value, rooms: [...(UI.egRooms || [])], verde: $('#egV').checked }; }
+function egForm() { return { fecha: $('#egF').value, turno: $('#egT').value, rooms: [...new Set(UI.egRooms || [])], verde: $('#egV').checked }; }
 // Aulas que se pueden elegir: las que asigna la OCA en el mismo campus, con su estado ese día y turno (libres primero)
 function egOpciones(ev, f) {
   const campus = ev.rooms.length ? campusOf(ev.rooms[0]) : 'Tarongers', q = norm($('#egBus') ? $('#egBus').value : ''), ya = new Set(f.rooms.map(normAula));
@@ -3953,22 +3964,33 @@ async function guardarExamGrado() {
     if (f.turno !== ev.turno && d.tc != null) set(d.hoja, d.fila, d.tc, { str: f.turno === 'M' ? 'MAÑANA' : 'TARDE' });
     if (cambiaAulas && d.manda && d.aCols) d.aCols.forEach((col, i) => set(d.hoja, d.fila, col, f.rooms[i] ? { str: f.rooms[i] } : { empty: true }));
   }
-  const desc = `${ev.cod} ${ev.asig} (${ev.plan}): ${fmtDate(ev.fecha)} ${TURNO_LBL[ev.turno]} ${ev.rooms.join(', ')} → ${fmtDate(f.fecha)} ${TURNO_LBL[f.turno]} ${f.rooms.join(', ')}`;
-  if (!confirm(`¿Guardar este cambio?\n\n${desc}\n\nSe escribe en el Excel de exámenes de grado (${[...porHoja.values()].reduce((t, h) => t + Object.keys(h).length, 0)} fila/s)${f.verde && APP.examenes ? ' y en el cuadrante' : ''}.${comunes.length ? `
-
-No se tocan ${comunes.length} fila/s comunes con otras titulaciones (${comunes.map(d => d.hoja + ' fila ' + d.fila).join('; ')}): si solo cambia esta titulación, sepáralas a mano en el Excel.` : ''}`)) return;
-  const ok = await writeRoleFile('examgrados', 'Examen de grado: ' + desc, buf => { let b = buf; for (const [hoja, edits] of porHoja) b = XE.setCells(b, hoja, edits); return b; });
-  if (!ok) return;
-  // 2) el cuadrante: quitar el verde que ya no usa nadie y pintar el nuevo
+  const desc = `${ev.cod} ${ev.asig} (${ev.plan}${ev.grupo ? ', grupo ' + ev.grupo : ''}): ${fmtDate(ev.fecha)} ${TURNO_LBL[ev.turno]} ${ev.rooms.join(', ')} → ${fmtDate(f.fecha)} ${TURNO_LBL[f.turno]} ${f.rooms.join(', ')}`;
+  // 2) el cuadrante, calculado ANTES de escribir nada: qué verde se quita (si no lo usa otro examen) y cuál se pinta
+  const cuOps = [], cuTxt = [], deshacer = [];
   if (f.verde && APP.examenes) {
-    const E = APP.examenes, ops = [], quedan = new Set();
-    for (const e of APP.examGrados.eventos) if (e.turno && e.rooms.length && egCuenta(e)) for (const r of e.rooms) quedan.add(normAula(r) + '|' + e.fecha + '|' + e.turno);
-    for (const r of ev.rooms) { const c = celdaCuadrante(r, ev.fecha, ev.turno); if (c && c.rv && c.rv.quien.tipo === 'grado' && !quedan.has(normAula(r) + '|' + ev.fecha + '|' + ev.turno)) ops.push({ sheet: c.sheet, ref: c.ref, none: true }); }
-    for (const r of f.rooms) { const c = celdaCuadrante(r, f.fecha, f.turno); if (!c || (c.rv && c.rv.quien.tipo === 'grado')) continue; const muestra = E.reservas.find(rv => rv.quien.tipo === 'grado' && rv.hoja === c.sheet) || E.reservas.find(rv => rv.quien.tipo === 'grado'); ops.push(muestra ? { sheet: c.sheet, ref: c.ref, fromRef: { sheet: muestra.hoja, ref: muestra.ref } } : { sheet: c.sheet, ref: c.ref, rgb: 'FF92D050' }); }
-    if (ops.length) await writeRoleFile('examenes', 'Verde del examen de grado ' + desc, buf => XE.setFills(buf, ops).buf);
+    const E = APP.examenes, otros = new Set(), dia = (r, fe, t) => `${r} ${DIA_N[wdOf(fe)].toLowerCase()} ${fmtDate(fe)} ${TURNO_LBL[t]}`;
+    for (const e of APP.examGrados.eventos) if (e.id !== ev.id && e.turno && e.rooms.length && egCuenta(e)) for (const r of e.rooms) otros.add(normAula(r) + '|' + e.fecha + '|' + e.turno);
+    const nuevos = new Set(f.rooms.map(r => normAula(r) + '|' + f.fecha + '|' + f.turno));
+    const muestra = sh => E.reservas.find(rv => rv.quien.tipo === 'grado' && rv.hoja === sh) || E.reservas.find(rv => rv.quien.tipo === 'grado');
+    const pintar = c => { const m = muestra(c.sheet); return m ? { sheet: c.sheet, ref: c.ref, fromRef: { sheet: m.hoja, ref: m.ref } } : { sheet: c.sheet, ref: c.ref, rgb: 'FF92D050' }; };
+    for (const r of ev.rooms) { const k = normAula(r) + '|' + ev.fecha + '|' + ev.turno, c = celdaCuadrante(r, ev.fecha, ev.turno); if (c && c.rv && c.rv.quien.tipo === 'grado' && !otros.has(k) && !nuevos.has(k)) { cuOps.push({ sheet: c.sheet, ref: c.ref, none: true }); deshacer.push(pintar(c)); cuTxt.push('quitar el verde de ' + dia(r, ev.fecha, ev.turno)); } }
+    for (const r of f.rooms) { const c = celdaCuadrante(r, f.fecha, f.turno); if (!c) { cuTxt.push(`${r} no está en el cuadrante (no se pinta)`); continue; } if (c.rv && c.rv.quien.tipo === 'grado') continue; cuOps.push(pintar(c)); deshacer.push(c.rv ? null : { sheet: c.sheet, ref: c.ref, none: true }); cuTxt.push('pintar de verde ' + dia(r, f.fecha, f.turno) + (c.rv ? ` (ahora reservada para ${c.rv.quien.texto})` : '')); }
   }
+  const filasEx = [...porHoja.entries()].map(([h, e]) => `${h}: fila${Object.keys(e).length > 1 ? 's' : ''} ${Object.keys(e).join(', ')}`);
+  const resumen = `${desc}\n\nSe va a cambiar:\n• Excel de exámenes de grado → ${filasEx.join('; ') || 'nada'}\n• Cuadrante → ${!f.verde ? 'nada (casilla desmarcada)' : cuTxt.join('; ') || 'nada que cambiar'}${comunes.length ? `\n\nNo se tocan ${comunes.length} fila/s comunes con otras titulaciones (${comunes.map(d => d.hoja + ' fila ' + d.fila).join('; ')}): si solo cambia esta titulación, sepáralas a mano en el Excel.` : ''}\n\nSe hace todo o nada: si alguno de los dos Excel está abierto, no se cambia ninguno.`;
+  if (!confirm(resumen)) return;
+  APP.guardandoVarios = true;
+  try { await guardarExamGradoEscribir(ev, desc, cuOps, deshacer, porHoja); } finally { APP.guardandoVarios = false; refresh(); }
+}
+async function guardarExamGradoEscribir(ev, desc, cuOps, deshacer, porHoja) {
+  const fallo = que => { addNotice(`<b>No se ha guardado el cambio del examen ${esc(ev.cod)} ${esc(ev.asig)}.</b> No se ha podido escribir en ${que} (seguramente alguien lo tiene abierto en Excel). <b>No se ha cambiado nada</b>: ciérralo y vuelve a pulsar «Guardar el cambio».`, null, true); renderNotice(); };
+  // 3) primero el cuadrante; si no se puede, no se toca nada
+  if (cuOps.length && !await writeRoleFile('examenes', 'Verde del examen de grado ' + desc, buf => XE.setFills(buf, cuOps).buf)) return fallo('el cuadrante de reservas');
+  // 4) después el Excel de exámenes; si falla, se deja el cuadrante como estaba
+  const ok = await writeRoleFile('examgrados', 'Examen de grado: ' + desc, buf => { let b = buf; for (const [hoja, edits] of porHoja) b = XE.setCells(b, hoja, edits); return b; });
+  if (!ok) { const vuelta = deshacer.filter(Boolean); if (vuelta.length) await writeRoleFile('examenes', 'Deshecho (no se pudo guardar el examen): ' + desc, buf => XE.setFills(buf, vuelta).buf); return fallo('el Excel de exámenes de grado'); }
   $('#dlgInfo').close();
-  toast('Examen cambiado');
+  toast('Examen cambiado en el Excel de exámenes' + (cuOps.length ? ' y en el cuadrante' : ''));
 }
 const resvCell = rv => `<b>${rv.quien.tipo === 'grado' ? 'Exámenes de grado' : rv.quien.tipo === 'master' ? 'Reserva de exámenes del máster ' + esc(rv.quien.texto) : 'Reserva: ' + esc(rv.quien.texto)}</b><br><small>cuadrante de exámenes · ${TURNO_LBL[rv.turno]} · ${esc(rv.hoja)} ${esc(rv.ref)}</small>`;
 
@@ -4633,7 +4655,8 @@ function searchAll(q) {
     const w2 = words.filter(w => !['EXAMEN', 'EXAMENES', 'GRADO'].includes(w));
     const hit2 = hay => { const h = norm(hay); return w2.length && w2.every(w => h.includes(w)); };
     const evs = APP.examGrados.eventos.filter(e => e.fecha && (e.rooms.length || e.turno) && !(ontOff() && esOntEv(e)) && hit2(`${e.cod} ${e.asig} ${e.plan}`)).sort((a, b) => a.fecha.localeCompare(b.fecha));
-    for (const e of evs.slice(0, 8)) out.push({ kind: 'Examen de grado', label: `${e.cod} · ${e.asig}`, sub: `${e.plan} · ${DIA_N[wdOf(e.fecha)]} ${fmtDate(e.fecha)}${e.turno ? ' ' + TURNO_LBL[e.turno] : ''}${e.rooms.length ? ' · ' + e.rooms.join(', ') : ''}`, exact: w2.includes(e.cod), act: () => openExamGrado(e) });
+    const CONV_C = { '1C1S': '1ª conv. 1er semestre', '2C1S': '2ª conv. 1er semestre', '1C2S': '1ª conv. 2º semestre', '2C2S': '2ª conv. 2º semestre' };
+    for (const e of evs.slice(0, 12)) out.push({ kind: 'Examen de grado', label: `${e.cod} · ${e.asig}${e.grupo ? ' · grupo ' + e.grupo : ''}`, sub: `${e.plan} · ${CONV_C[e.conv] || e.conv} · ${DIA_N[wdOf(e.fecha)]} ${fmtDate(e.fecha)}${e.turno ? ' ' + TURNO_LBL[e.turno] : ''}${e.rooms.length ? ' · ' + e.rooms.join(', ') : ' · sin aula'}`, exact: w2.includes(e.cod), act: () => openExamGrado(e) });
   }
   const order = { 'Máster': 0, 'Aula': 1, 'Asignatura': 2, 'Examen de grado': 3 };
   return out.sort((a, b) => (b.exact ? 1 : 0) - (a.exact ? 1 : 0) || order[a.kind] - order[b.kind]).slice(0, 20);
@@ -5360,7 +5383,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const udn = t.closest('[data-undodone]'); if (udn) return undoDone(udn.dataset.undodone, true);
     if (t.closest('[data-act="errocultar"]')) { try { sessionStorage.setItem('uvMasters.errOculto', erroresExcel().firma); } catch (e) { /* sin almacenamiento */ } return renderNotice(); }
     if (t.closest('[data-act="errver"]')) { try { sessionStorage.removeItem('uvMasters.errOculto'); } catch (e) { /* sin almacenamiento */ } return renderNotice(); }
-    const nof = t.closest('[data-noticeoff]'); if (nof) { APP.notices = APP.notices.filter(n => n.id !== nof.dataset.noticeoff); return renderNotice(); }
+    const nof = t.closest('[data-noticeoff]'); if (nof) { if (APP.notices.some(n => n.id === nof.dataset.noticeoff && n.kind === 'errNuevos')) APP.errBase = null; APP.notices = APP.notices.filter(n => n.id !== nof.dataset.noticeoff); return renderNotice(); }
     if (t.closest('#aeSave')) return saveAulaEdit();
     const sacc = t.closest('[data-solacc]'); if (sacc) { $('#dlgReq').close(); UI.reqSol = null; return writeMeta([{ t: 'acc', key: sacc.dataset.solacc, on: true }]); }
     const hu = t.closest('[data-hueco]'); if (hu) { const [d, h] = hu.dataset.hueco.split('|'); $('#rqDia').value = d; $('#rqHora').value = h; $('#rqFin').value = ''; return updateRequest(); }

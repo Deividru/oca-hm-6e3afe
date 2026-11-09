@@ -1,10 +1,10 @@
 {
- "version": "2026-11-09 10:00",
- "notas": "Nuevo botón «📦 Crear la copia» en Carpeta y archivos: junta en un zip los Excel y la memoria para mandarlos a revisar.",
- "publicada": "2026-11-09T09:00:18.928Z",
+ "version": "2026-11-09 10:20",
+ "notas": "Buscador: grupo y convocatoria de cada examen. Cambiar un examen pide confirmación y guarda todo o nada. El aviso de errores nuevos se quita solo al arreglarse.",
+ "publicada": "2026-11-09T09:24:12.786Z",
  "app": {
   "file": "app.html",
-  "sha256": "3a1418cea9ca0dad880bf4238369f3b48f14995ec3fde7943c86f7811c22db17",
-  "firma": "P9tqbR732J1rsqAsn4MADrdsfDEfCpIOKCcfcdMW7cFZyaIwhFP-D4f6LXnVJo4TaGpSgKRuwjuNWRzWMaYj3g"
+  "sha256": "ac9e655ddb6e1b004cd3e4d1f2961ecfd0856447df67624c453b793ef94a1f83",
+  "firma": "ywO-rDoxcYgMz_eYwWUgV-Z4RBKeAFH7-4I_P2U_xqrAxGkuSiJiq4GTCbyamG_NUSi5rIYPMoMc8ITjIimhHg"
  }
 }
