@@ -800,6 +800,85 @@ code{font-size:12px;background:var(--panel2);padding:1px 4px;border-radius:3px}
   .main{height:auto;overflow:visible}
   .panel{box-shadow:none}
 }
+
+/* ===== Tema «vidrio» (glassmorphism), aprobado el 13/11/2026 a partir de maquetas/glassy_v2.html =====
+   construir.py lo pega al final del primer <style>. Solo CSS del navegador: sin descargas, funciona sin conexión.
+   Para quitarlo: vaciar este archivo y volver a construir. Solo cambia superficies y colores, no la disposición. */
+:root{
+  --panel:rgba(255,255,255,.72); --panel2:rgba(240,245,251,.88);
+  --line:rgba(18,32,51,.10); --accent-soft:rgba(29,95,174,.11);
+  --grado-bg:rgba(255,250,240,.55);
+  --shadow:inset 0 1px 0 rgba(255,255,255,.75),0 8px 28px rgba(31,56,95,.11);
+  --glass-blur:blur(20px) saturate(170%);
+  --glass-bar:rgba(244,247,252,.70);
+  --glass-side:linear-gradient(165deg,rgba(17,49,88,.92),rgba(12,32,60,.86));
+  --glass-fondo:
+    radial-gradient(900px 600px at 12% 8%,#c3dafd 0,transparent 60%),
+    radial-gradient(800px 600px at 95% 15%,#f3d3ea 0,transparent 55%),
+    radial-gradient(900px 700px at 70% 100%,#c9f0e3 0,transparent 60%),
+    radial-gradient(700px 500px at 18% 98%,#ffe6c2 0,transparent 55%),
+    #eef2f8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --panel:rgba(30,37,47,.72); --panel2:rgba(34,42,53,.9);
+    --line:rgba(255,255,255,.09); --accent-soft:rgba(110,168,240,.14);
+    --shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 28px rgba(0,0,0,.35);
+    --glass-bar:rgba(20,26,34,.70);
+    --glass-side:linear-gradient(165deg,rgba(11,25,44,.92),rgba(8,17,30,.9));
+    --glass-fondo:
+      radial-gradient(900px 600px at 12% 8%,#1b3358 0,transparent 60%),
+      radial-gradient(800px 600px at 95% 15%,#3a2340 0,transparent 55%),
+      radial-gradient(900px 700px at 70% 100%,#13372f 0,transparent 60%),
+      #10151c;
+  }
+}
+:root[data-theme="dark"]{
+  --panel:rgba(30,37,47,.72); --panel2:rgba(34,42,53,.9);
+  --line:rgba(255,255,255,.09); --accent-soft:rgba(110,168,240,.14);
+  --shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 28px rgba(0,0,0,.35);
+  --glass-bar:rgba(20,26,34,.70);
+  --glass-side:linear-gradient(165deg,rgba(11,25,44,.92),rgba(8,17,30,.9));
+  --glass-fondo:
+    radial-gradient(900px 600px at 12% 8%,#1b3358 0,transparent 60%),
+    radial-gradient(800px 600px at 95% 15%,#3a2340 0,transparent 55%),
+    radial-gradient(900px 700px at 70% 100%,#13372f 0,transparent 60%),
+    #10151c;
+}
+body{background:var(--glass-fondo);background-attachment:fixed}
+
+/* menú lateral: vidrio oscuro flotante */
+aside.side{margin:10px 0 10px 10px;height:calc(100vh - 20px);border-radius:20px;background:var(--glass-side);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  border:1px solid rgba(255,255,255,.14);box-shadow:0 18px 44px rgba(15,45,79,.25),inset 0 1px 0 rgba(255,255,255,.14)}
+.nav button{border-radius:11px}
+.nav button.on{background:rgba(255,255,255,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 4px 12px rgba(0,0,0,.14)}
+
+/* superficies de vidrio */
+.topbar,.bar,.revhead{background:var(--glass-bar);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
+.panel{border-radius:16px;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
+.bellp,#gres,#tourPop,.enode{backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
+.bellp,#gres,#tourPop{border-radius:16px}
+dialog{border-radius:20px;border:1px solid color-mix(in srgb,var(--panel) 40%,rgba(255,255,255,.5));background:color-mix(in srgb,var(--panel) 92%,transparent);
+  backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);
+  box-shadow:0 30px 80px rgba(15,35,65,.35),inset 0 1px 0 rgba(255,255,255,.6)}
+dialog::backdrop{background:rgba(20,35,60,.28);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+
+/* botones, campos y etiquetas */
+.btn{border-radius:10px;box-shadow:0 1px 2px rgba(31,56,95,.07)}
+.btn.primary{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 82%,#fff),var(--accent));box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 4px 12px color-mix(in srgb,var(--accent) 30%,transparent)}
+input,select,textarea{border-radius:9px}
+.tag{border-radius:999px;padding:0 9px}
+.bell{border-radius:12px}
+
+/* tarjetas de cifras: la franja de color, redondeada por dentro */
+.kpi{border-left:1px solid var(--line);position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:var(--k,transparent)}
+.kpi.bad{--k:var(--bad)}.kpi.warn{--k:#e6a23c}.kpi.ok{--k:var(--ok)}
+.kpi:hover{transform:translateY(-2px);transition:transform .15s}
+
+/* calendario: clases de máster algo más redondas; los grados siguen discretos */
+.blk:not(.g):not(.rv):not(.eg),.wk-blk:not(.g){border-radius:7px;border-color:rgba(255,255,255,.6);box-shadow:0 2px 6px hsl(var(--h,210) 40% 40% / .14)}
 </style>
 </head>
 <body>
@@ -1146,7 +1225,7 @@ const PAGE = 100;
 const T0 = 8 * 60, T1 = 22 * 60;
 const APP_DIR = '_NO_TOCAR_datos_herramienta';
 const SYNC_MS = 10000;
-const APP_VERSION = '2026-11-09 10:20';
+const APP_VERSION = '2026-11-13 13:40';
 const LOCK_MS = 60000;
 const READ_OPTS = { type: 'array', cellFormula: true, cellNF: false, cellHTML: false, cellText: false };
 const SHEET_OCA = 'MASTER HORARIOS PARA UXXI';
@@ -1449,6 +1528,9 @@ function parseGrados(wb, sheet) {
   const known = new Set(rows.slice(1).map(r => r && normAula(r[c.aula])).filter(Boolean));
   const fromCaula = t => { const n = norm(t).replace(/\(.*?\)/g, ' ').replace(/^AULA\s+/, '').replace(/^INFORMATICA\s+/, ''); return normAula(n); };
   const perRoom = new Map();
+  // para poder escribir: columnas del aula, cómo se escribe cada día y los datos de cada aula copiados de una fila suya
+  const ROOMC = { CAULA: c.caula, AULA: c.aula, EDIFICIO: c.edif, COMUNICA: c.comunica, PLANTA: c.planta, TIPO: c.tipoAula, CAPACIDAD: c.cap, TIPO_SUELO: c.suelo, CAP_50: ix('CAP_50'), CAP_30: ix('CAP_30') };
+  const meta = { sheet, roomC: ROOMC, dia: c.dia, hi: c.hi, hf: c.hf, diaTxt: {}, plantilla: new Map() };
   rows.slice(1).forEach((r, i) => {
     if (!r || r.every(v => v == null || v === '')) return;
     const fila = i + 2, caulaT = val(r, c.caula), toks = norm(caulaT).split(/[^A-Z0-9.,]+/).filter(Boolean);
@@ -1462,12 +1544,14 @@ function parseGrados(wb, sheet) {
     if (!aula || !wd || a == null || b == null || !ini || !fin || b <= a) { rev.invalidas.push({ ...info, motivo: !aula ? 'sin aula' : !wd ? 'día desconocido' : a == null || b == null || b <= a ? 'horas incorrectas' : 'fechas incorrectas' }); return; }
     const com = normAula(val(r, c.comunica));
     if (com && com === aula) rev.comunicaMisma.push(info);
+    if (!meta.diaTxt[wd]) meta.diaTxt[wd] = cellStr(r[c.dia]);
+    if (!meta.plantilla.has(aula) && normAula(r[c.aula]) === aula && toks.includes(aula)) meta.plantilla.set(aula, Object.fromEntries(Object.entries(ROOMC).filter(([, i]) => i >= 0).map(([k, i]) => [k, r[i]])));
     if (!perRoom.has(aula)) perRoom.set(aula, { cap: new Map(), planta: new Map(), edif: new Map() });
     const pr = perRoom.get(aula);
     for (const [k, v] of [['cap', val(r, c.cap)], ['planta', val(r, c.planta).replace(/\.0$/, '')], ['edif', val(r, c.edif)]]) if (v) { if (!pr[k].has(v)) pr[k].set(v, []); pr[k].get(v).push(fila); }
     out.push({ fila, aula, wd, a, b, ini, fin, asig: val(r, c.asig), cod: val(r, c.cod), grp: val(r, c.grp), plan: val(r, c.plan), cap: val(r, c.cap),
       curso: val(r, c.curso), sem: val(r, c.sem), turno: val(r, c.turno), idioma: val(r, c.idioma), tipoAula: val(r, c.tipoAula), tipoAsig: val(r, c.tipoAsig),
-      planta: val(r, c.planta).replace(/\.0$/, ''), comunica: normAula(val(r, c.comunica)), suelo: val(r, c.suelo) });
+      planta: val(r, c.planta).replace(/\.0$/, ''), comunica: normAula(val(r, c.comunica)), suelo: val(r, c.suelo), horaNum: typeof r[c.hi] === 'number' });
   });
   const LBL = { cap: 'plazas', planta: 'planta', edif: 'edificio' };
   for (const [aula, pr] of perRoom) for (const k of ['cap', 'planta', 'edif']) if (pr[k].size > 1) rev.datos.push({ aula, campo: LBL[k], valores: [...pr[k].entries()].map(([v, f]) => ({ v, n: f.length, filas: f.slice(0, 5) })) });
@@ -1477,7 +1561,7 @@ function parseGrados(wb, sheet) {
     const x = arr[i], y = arr[j];
     if (x.a < y.b && y.a < x.b && x.ini <= y.fin && y.ini <= x.fin) rev.choques.push({ x, y });
   }
-  out.revision = rev;
+  out.revision = rev; out.meta = meta;
   return out;
 }
 
@@ -1587,7 +1671,7 @@ async function start(dir) {
 //    así que cada persona lo localiza una vez en su ordenador; la ruta se apunta a mano para los compañeros.
 //  · un archivo de la carpeta de la herramienta o sus subcarpetas: el elegido por el equipo o el más reciente fuera de "Histórico".
 const ROLES = ['oca', 'directorio', 'grados', 'contactos', 'aulas', 'examenes', 'examgrados'];
-const EDITABLE = new Set(['oca', 'aulas', 'examenes', 'examgrados']);
+const EDITABLE = new Set(['oca', 'aulas', 'examenes', 'examgrados', 'grados']);
 const roleCfg = role => { const c = APP.filesCfg && APP.filesCfg[role]; return c && typeof c === 'object' ? c : null; };
 const rutaDe = path => (APP.filesCfg.base ? APP.filesCfg.base.replace(/[\\/]+$/, '') : APP.dir.name) + '\\' + path.replace(/\//g, '\\');
 function missingText(role) {
@@ -2768,8 +2852,90 @@ function openGrado(g) {
     ${row('Aula', `${esc(g.aula)}${g.cap ? ' · ' + esc(g.cap) + ' plazas' : ''}${g.tipoAula ? ' · ' + esc(g.tipoAula.toLowerCase()) : ''}`)}
     ${same.length > 1 ? row('Otras clases del grupo', same.filter(x => x !== g).map(x => `${DIA_N[x.wd]} ${hm(x.a)}–${hm(x.b)} en ${esc(x.aula)}`).join('<br>')) : ''}</dl>
     ${masters.length ? `<div class="box bad" style="margin-top:14px"><h3>Coincide con másteres</h3><ul>${masters.map(s => `<li><a data-edit="${s.id}">${esc(mLabel(s.master))} · ${cTag(s.codigo)}${esc(s.asig)}</a> ${fmtDate(s.fecha)} ${hm(s.hi)}–${hm(s.hf)}</li>`).join('')}</ul></div>` : ''}
-    <p><small>Información del horario de grados${APP.gradosFile ? ' (' + esc(APP.gradosFile.name) + ')' : ''}. Es solo de consulta: para cambiarla hay que actualizar ese archivo.</small></p>`;
+    ${grFormHtml(g)}
+    <p><small>Del horario de grados${APP.gradosFile ? ' (' + esc(APP.gradosFile.name) + ', fila ' + g.fila + ')' : ''}.</small></p>`;
+  UI.grEdit = g; UI.grAula = g.aula;
+  grRecheck();
   $('#dlgInfo').showModal();
+}
+/* ---------- Cambiar una clase de grado (aula, día u hora, para todo su periodo) ---------- */
+const DIA_LARGO = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+// La misma clase escrita en otras filas (otra titulación que la comparte): misma aula, día, horas y asignatura
+function grGemelas(g) { return APP.grados.filter(x => x !== g && x.aula === g.aula && x.wd === g.wd && x.a === g.a && x.b === g.b && x.ini <= g.fin && g.ini <= x.fin && (x.cod === g.cod || norm(x.asig) === norm(g.asig))); }
+function grFormHtml(g) {
+  const gem = grGemelas(g), op = (v, t, on) => `<option value="${v}" ${on ? 'selected' : ''}>${t}</option>`;
+  return `<div class="box" style="margin-top:14px"><h3 style="margin-top:0">Cambiar esta clase</h3>
+    <div class="egform grform">
+      <label>Día<select id="grD">${[1, 2, 3, 4, 5, 6].map(d => op(d, DIA_LARGO[d], d === g.wd)).join('')}</select></label>
+      <label>Empieza<input type="time" id="grA" step="900" value="${hm(g.a)}"></label>
+      <label>Acaba<input type="time" id="grB" step="900" value="${hm(g.b)}"></label>
+      <div class="wide egsel"><span class="egsel-h">Aula</span><div id="grChip" class="egchips"></div>
+        <input id="grBus" placeholder="Buscar otra aula: S510, planta 5, informática, Oeste…" autocomplete="off"><div id="grOpts" class="egopts"></div></div>
+      ${gem.length ? `<div class="wide"><b>Esta clase la comparten otras titulaciones</b> (misma aula, día y hora):${gem.map((x, i) => `<label class="chk"><input type="checkbox" data-grgem="${i}" checked> ${esc(x.plan)} · ${esc(x.grp)} <small>(fila ${x.fila})</small></label>`).join('')}<small class="muted">Marcadas = se cambian a la vez.</small></div>` : ''}
+    </div>
+    <div id="grCheck"></div>
+    <p style="margin:12px 0 0"><button class="btn primary" id="grSave" ${APP.readOnly ? 'disabled title="Modo consulta"' : ''}>Guardar el cambio</button></p></div>`;
+}
+function grForm() {
+  const g = UI.grEdit, gem = grGemelas(g), t = v => { const m = String(v || '').match(/^(\d{1,2}):(\d{2})/); return m ? +m[1] * 60 + +m[2] : null; };
+  return { wd: +$('#grD').value, a: t($('#grA').value), b: t($('#grB').value), aula: UI.grAula, filas: [g, ...gem.filter((x, i) => { const c = $(`[data-grgem="${i}"]`); return !c || c.checked; })] };
+}
+// Qué hay en esa aula ese día y horas durante el periodo de la clase (másteres y otras clases de grado)
+function grComprobar(f, aula) {
+  const na = normAula(aula), ini = f.filas.reduce((m, x) => x.ini < m ? x.ini : m, f.filas[0].ini), fin = f.filas.reduce((m, x) => x.fin > m ? x.fin : m, f.filas[0].fin), mias = new Set(f.filas);
+  const ms = f.a == null || f.b == null ? [] : live().filter(s => normAula(s.aula) === na && s.fecha && wdOf(s.fecha) === f.wd && ini <= s.fecha && s.fecha <= fin && s.hi < f.b && f.a < s.hf);
+  const gs = f.a == null || f.b == null ? [] : APP.grados.filter(x => !mias.has(x) && x.aula === na && x.wd === f.wd && x.a < f.b && f.a < x.b && x.ini <= fin && ini <= x.fin);
+  const info = D.roomInfo.get(na) || {};
+  return { aula, na, ms, gs, info, mal: ms.length || gs.length };
+}
+function grOpciones(f) {
+  const campus = campusOf(UI.grEdit.aula), q = norm($('#grBus') ? $('#grBus').value : '');
+  const cands = [...D.roomInfo.entries()].filter(([k, i]) => i.gestion && k !== normAula(f.aula) && campusOf(k) === campus && !i.nosug && (!q || norm([k, i.aula, i.tipo, i.edificio, 'planta ' + i.planta].join(' ')).includes(q)));
+  // libres primero; luego las que tienen al menos las plazas del aula de ahora, de la más ajustada a la más grande
+  const ahora = +((D.roomInfo.get(UI.grEdit.aula) || {}).cap || UI.grEdit.cap) || 0, cap = i => +i.cap || 0, cabe = i => !ahora || cap(i) >= ahora;
+  return cands.map(([k, i]) => ({ k, i, c: grComprobar(f, k), poca: !cabe(i) })).sort((a, b) => (a.c.mal ? 1 : 0) - (b.c.mal ? 1 : 0) || (a.poca ? 1 : 0) - (b.poca ? 1 : 0) || (a.poca ? cap(b.i) - cap(a.i) : cap(a.i) - cap(b.i)) || a.k.localeCompare(b.k, 'es', { numeric: true })).slice(0, 24);
+}
+function grRecheck() {
+  const g = UI.grEdit; if (!g || !$('#grCheck')) return;
+  const f = grForm(), malHora = f.a == null || f.b == null || f.b <= f.a;
+  const cambia = f.wd !== g.wd || f.a !== g.a || f.b !== g.b || normAula(f.aula) !== g.aula;
+  const ri = D.roomInfo.get(normAula(f.aula)) || {};
+  $('#grChip').innerHTML = `<span class="egchip">${esc(f.aula)}${ri.cap ? ' · ' + esc(ri.cap) + ' plazas' : ''}</span>`;
+  $('#grOpts').innerHTML = malHora ? '' : grOpciones(f).map(o => `<button type="button" class="egopt ${o.c.mal ? 'bad' : 'ok'}" data-gradd="${esc(o.k)}"><b>${esc(o.k)}</b> <small>${o.i.cap || '?'} plazas · ${esc((o.i.tipo || '').toLowerCase())}</small><span>${o.c.ms.length ? '⚠ máster' : o.c.gs.length ? '⚠ otra clase de grado' : o.poca ? 'libre, pero más pequeña' : 'libre'}</span></button>`).join('') || '<small class="muted">No hay aulas con esa búsqueda.</small>';
+  const c = malHora ? null : grComprobar(f, f.aula), fechas = s => [...new Set(s.map(x => fmtDate(x.fecha)))];
+  $('#grCheck').innerHTML = malHora ? '<p class="badtext">La hora de acabar tiene que ser después de la de empezar.</p>'
+    : `<p class="${c.mal ? 'badtext' : ''}" style="margin:10px 0 0"><b>${esc(f.aula)}</b>, cada ${DIA_LARGO[f.wd].toLowerCase()} de ${hm(f.a)} a ${hm(f.b)}: ${c.mal ? '' : '✓ libre todo el periodo de la clase.'}${c.ms.length ? `<br>⚠ Coincide con ${c.ms.length} sesión/es de máster (${esc([...new Set(c.ms.map(s => mShort(s.master) + ' ' + s.asig))].slice(0, 3).join('; '))}): ${fechas(c.ms).slice(0, 6).join(', ')}${fechas(c.ms).length > 6 ? '…' : ''}` : ''}${c.gs.length ? `<br>⚠ Coincide con otra clase de grado: ${c.gs.slice(0, 3).map(x => esc(x.cod + ' ' + x.asig + ' ' + x.grp + ' (' + x.plan + ')')).join('; ')}` : ''}</p>`
+      + (cambia ? '' : '<p class="muted">Cambia el aula, el día o la hora para guardar.</p>');
+  if ($('#grSave')) $('#grSave').disabled = !cambia || malHora || APP.readOnly;
+}
+async function guardarClaseGrado() {
+  const g = UI.grEdit; if (!g || soloLectura()) return;
+  const f = grForm(), M = APP.grados.meta;
+  if (f.a == null || f.b == null || f.b <= f.a) return toast('Revisa las horas');
+  const na = normAula(f.aula), cambiaAula = na !== g.aula, cambiaDia = f.wd !== g.wd, cambiaHora = f.a !== g.a || f.b !== g.b;
+  // datos del aula nueva: los de una fila del horario de grados que ya la use; si no hay, lo que se sabe del aula
+  let pl = M.plantilla.get(na), aviso = '';
+  if (cambiaAula && !pl) {
+    const ri = D.roomInfo.get(na) || {}, ed = /^S/.test(na) ? 'SUD' : /^O/.test(na) ? 'OEST' : /^N/.test(na) ? 'NORD' : '';
+    pl = { CAULA: 'AULA ' + na, AULA: na, EDIFICIO: ed, COMUNICA: ri.comunica || '', PLANTA: ri.planta !== '' && ri.planta != null && !isNaN(+ri.planta) ? +ri.planta : '', TIPO: '', CAPACIDAD: ri.cap && !isNaN(+ri.cap) ? +ri.cap : '', TIPO_SUELO: '', CAP_50: '', CAP_30: '' };
+    aviso = `\n\nOjo: ${na} no sale en ninguna otra fila del horario de grados. Se escribe CAULA «AULA ${na}» y las plazas y la planta que se conocen; tipo, suelo y CAP_50/CAP_30 quedan vacíos. Revisad que CAULA es como lo llama UXXI.`;
+  }
+  const cel = v => v == null || v === '' ? { empty: true } : typeof v === 'number' ? { num: v } : { str: String(v) };
+  const col = i => XLSX.utils.encode_col(i), edits = {};
+  for (const x of f.filas) {
+    const e = edits[x.fila] = {};
+    if (cambiaAula) for (const [k, i] of Object.entries(M.roomC)) if (i >= 0 && k in pl) e[col(i)] = cel(pl[k]);
+    if (cambiaDia) e[col(M.dia)] = { str: M.diaTxt[f.wd] || DIA_LARGO[f.wd] };
+    if (cambiaHora) { e[col(M.hi)] = x.horaNum ? { num: f.a / 1440 } : { str: hm(f.a) }; e[col(M.hf)] = x.horaNum ? { num: f.b / 1440 } : { str: hm(f.b) }; }
+  }
+  const c = grComprobar(f, f.aula);
+  const antes = `${DIA_LARGO[g.wd]} ${hm(g.a)}–${hm(g.b)} en ${g.aula}`, despues = `${DIA_LARGO[f.wd]} ${hm(f.a)}–${hm(f.b)} en ${na}`;
+  const desc = `${g.cod} ${g.asig} (${f.filas.map(x => x.plan + ' ' + x.grp).join(', ')}): ${antes} → ${despues}`;
+  const que = [cambiaAula ? 'aula (CAULA, AULA y sus datos: edificio, planta, plazas…)' : '', cambiaDia ? 'día' : '', cambiaHora ? 'horas' : ''].filter(Boolean).join(', ');
+  const choque = c.mal ? `\n\n⚠ Ojo: ${[c.ms.length ? c.ms.length + ' sesión/es de máster' : '', c.gs.length ? c.gs.length + ' clase/s de grado' : ''].filter(Boolean).join(' y ')} en esa aula a esa hora.` : '';
+  if (!confirm(`${desc}\n\nSe va a cambiar en el horario de grados (hoja ${M.sheet}), fila${f.filas.length > 1 ? 's' : ''} ${f.filas.map(x => x.fila).join(', ')}: ${que}. Vale para todo el periodo de la clase (del ${fmtDate(g.ini)} al ${fmtDate(g.fin)}).${choque}${aviso}\n\nRecordad que en UXXI hay que cambiarlo también.\n\n¿Guardar el cambio?`)) return;
+  if (await writeRoleFile('grados', 'Clase de grado: ' + desc, buf => XE.setCells(buf, M.sheet, edits))) { $('#dlgInfo').close(); toast('Clase de grado cambiada en el horario de grados'); }
+  else { addNotice(`<b>No se ha guardado el cambio de la clase ${esc(g.cod)} ${esc(g.asig)}.</b> Seguramente alguien tiene abierto el horario de grados en Excel. No se ha cambiado nada: ciérralo y vuelve a intentarlo.`, null, true); renderNotice(); }
 }
 
 // Leyenda de lo que viene del cuadrante y de los exámenes de grado (igual en día y semana)
@@ -3242,7 +3408,7 @@ function setupHtml() {
 /* ---------- Cómo encaja todo: los archivos, sus cruces y qué pasa al cambiar algo ---------- */
 const ARCH = {
   oca: { ico: '📗', nom: 'Horario de másteres', que: 'Una fila por sesión de máster: asignatura, día, hora y aula. Es lo que se sube a UXXI.' },
-  grados: { ico: '📘', nom: 'Horario de grados', que: 'Las clases semanales de los grados: para saber qué aulas están ocupadas por grados.' },
+  grados: { ico: '📘', nom: 'Horario de grados', que: 'Las clases semanales de los grados: qué aulas ocupan. Se puede cambiar el aula, el día o la hora de una clase.' },
   directorio: { ico: '📙', nom: 'Directorio de espacios', que: 'Qué aulas asigna la OCA, sus plazas y plazas de examen. Las que no están, son especiales.' },
   contactos: { ico: '📒', nom: 'Contactos de directores', que: 'Nombre, siglas y correos de cada máster.' },
   aulas: { ico: '🗂️', nom: 'Listado de aulas', que: 'Lo crea la herramienta: todo lo que se sabe de cada aula, para corregirlo en un sitio.' },
@@ -3811,7 +3977,7 @@ async function writeRoleFile(role, label, transform) {
     const w = await src.fh.createWritable(); await w.write(out); await w.close();
     const entry = { id: newId(), archivo: f0.name, label, por: userName(), at: new Date().toISOString() };
     try { await writeFile(await appDir('config', 'reservas_cambios'), entry.id + '.json', JSON.stringify(entry)); } catch (e) { /* ya está en el Excel */ }
-    if (role === 'examgrados') APP.egFile = null; else APP.exFile = null;
+    if (role === 'examgrados') APP.egFile = null; else if (role === 'grados') APP.gradosFile = null; else APP.exFile = null;
     await scanFolder(); refresh();
     return true;
   } catch (e) { toast('No se ha podido guardar: ' + e.message); return false; }
@@ -5288,8 +5454,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (next) { UI.o.date = next; renderOcc(); } else toast(week ? 'No hay más semanas con solapes' : 'No hay más días con solapes'); });
   $('#uPrint').addEventListener('click', () => window.print());
   // Edificios
-  document.addEventListener('input', e => { if (e.target.closest('.egform')) egRecheck(); });
-  document.addEventListener('change', e => { if (e.target.matches('[data-mset]')) return setMostrar(e.target.dataset.mset, !e.target.checked); if (e.target.closest('.egform')) egRecheck(); if (e.target.matches('[data-solomirar]')) { try { localStorage.setItem('uvMasters.soloMirar', e.target.checked ? '1' : '0'); } catch (err) { /* sin almacenamiento */ } } });
+  document.addEventListener('input', e => { if (e.target.closest('.grform')) return grRecheck(); if (e.target.closest('.egform')) egRecheck(); });
+  document.addEventListener('change', e => { if (e.target.matches('[data-mset]')) return setMostrar(e.target.dataset.mset, !e.target.checked); if (e.target.closest('.grform')) grRecheck(); else if (e.target.closest('.egform')) egRecheck(); if (e.target.matches('[data-solomirar]')) { try { localStorage.setItem('uvMasters.soloMirar', e.target.checked ? '1' : '0'); } catch (err) { /* sin almacenamiento */ } } });
   $('#bDate').addEventListener('change', e => { UI.b.date = e.target.value; renderEdificios(); });
   $('#bSlot').addEventListener('change', e => { UI.b.slot = e.target.value; renderEdificios(); fitBar(); });
   $('#bHour').addEventListener('change', e => { UI.b.hour = e.target.value; renderEdificios(); });
@@ -5430,6 +5596,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const pl = t.closest('[data-plazo]'); if (pl) { try { localStorage.setItem('uvMasters.plazo', pl.dataset.plazo); } catch (err) { /* sin almacenamiento */ } APP.errPrev = null; return renderAll(); }
     const egl = t.closest('[data-egid]'); if (egl && APP.examGrados) { e.preventDefault(); if ($('#dlgInfo').open) $('#dlgInfo').close(); return openExamGrado(APP.examGrados.eventos[+egl.dataset.egid]); }
     if (t.closest('#egSave')) return guardarExamGrado();
+    if (t.closest('#grSave')) return guardarClaseGrado();
+    const gra = t.closest('[data-gradd]'); if (gra) { UI.grAula = gra.dataset.gradd; $('#grBus').value = ''; return grRecheck(); }
     const ega = t.closest('[data-egadd]'); if (ega) { UI.egRooms.push(ega.dataset.egadd); $('#egBus').value = ''; return egRecheck(); }
     const egd = t.closest('[data-egdel]'); if (egd) { UI.egRooms = UI.egRooms.filter(r => r !== egd.dataset.egdel); return egRecheck(); }
     const mb = t.closest('[data-mostrar]'); if (mb) { const open = mb.parentElement.querySelector('.mostrarp'); if (open) return open.remove(); return mostrarPanel(mb); }

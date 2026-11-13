@@ -1,10 +1,10 @@
 {
- "version": "2026-11-09 10:20",
- "notas": "Buscador: grupo y convocatoria de cada examen. Cambiar un examen pide confirmación y guarda todo o nada. El aviso de errores nuevos se quita solo al arreglarse.",
- "publicada": "2026-11-09T09:24:12.786Z",
+ "version": "2026-11-13 13:40",
+ "notas": "Nuevo estilo de vidrio, más limpio. Se puede cambiar el aula, el día o la hora de una clase de grado desde su ficha (con comprobación de choques y confirmación).",
+ "publicada": "2026-11-13T12:40:59.504Z",
  "app": {
   "file": "app.html",
-  "sha256": "ac9e655ddb6e1b004cd3e4d1f2961ecfd0856447df67624c453b793ef94a1f83",
-  "firma": "ywO-rDoxcYgMz_eYwWUgV-Z4RBKeAFH7-4I_P2U_xqrAxGkuSiJiq4GTCbyamG_NUSi5rIYPMoMc8ITjIimhHg"
+  "sha256": "00a289256a3a7c4247fd15ab1d1ce3446f3f2a4e1dc4c82d20f80e526186def1",
+  "firma": "7ByvI8lNdhXJdp8G1YK_DgAiSmjY1_iBK0ddohAmifN26v8InYAT4cBeYn9jlRXWeLB7rB4lWjUN8OqXBOsg9g"
  }
 }
