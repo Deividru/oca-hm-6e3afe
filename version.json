@@ -1,10 +1,10 @@
 {
- "version": "2026-11-13 13:40",
- "notas": "Nuevo estilo de vidrio, más limpio. Se puede cambiar el aula, el día o la hora de una clase de grado desde su ficha (con comprobación de choques y confirmación).",
- "publicada": "2026-11-13T12:40:59.504Z",
+ "version": "2026-11-14 00:57",
+ "notas": "Arreglos tras la revisión: detecta CAULA y AULA distintas (filas 2421 y 2509 del horario de grados), quita avisos que no eran errores, corrige la pantalla Usuarios y la copia para revisión.",
+ "publicada": "2026-11-13T23:57:35.431Z",
  "app": {
   "file": "app.html",
-  "sha256": "00a289256a3a7c4247fd15ab1d1ce3446f3f2a4e1dc4c82d20f80e526186def1",
-  "firma": "7ByvI8lNdhXJdp8G1YK_DgAiSmjY1_iBK0ddohAmifN26v8InYAT4cBeYn9jlRXWeLB7rB4lWjUN8OqXBOsg9g"
+  "sha256": "d06a307cbd61db1862383aa932e37d39c6d8ce6d41c1f7e91d9c55cc91a2947f",
+  "firma": "HQ2iIs6npqo7DxVRRc2J9C6LLPD8iQP-fJPexRHGKf0VhVaOavr2oOJavGq80CmuEWkljeffZbPefgi-EUYRhw"
  }
 }

@@ -955,7 +955,7 @@ input,select,textarea{border-radius:9px}
     </div>
     <div id="occSummary"></div>
     <div class="panel" id="occ"></div>
-    <p class="lead">Los bloques de color son sesiones de máster: haz clic para cambiarlas. Los bloques crema son clases de grado: vienen del horario de grados, no se pueden cambiar desde aquí; haz clic para ver sus detalles.</p>
+    <p class="lead">Los bloques de color son sesiones de máster: haz clic para cambiarlas. Los bloques crema son clases de grado: haz clic para ver sus detalles o cambiarles el aula, el día o la hora.</p>
   </section>
 
   <!-- SOLAPES -->
@@ -1225,7 +1225,7 @@ const PAGE = 100;
 const T0 = 8 * 60, T1 = 22 * 60;
 const APP_DIR = '_NO_TOCAR_datos_herramienta';
 const SYNC_MS = 10000;
-const APP_VERSION = '2026-11-13 13:40';
+const APP_VERSION = '2026-11-14 00:57';
 const LOCK_MS = 60000;
 const READ_OPTS = { type: 'array', cellFormula: true, cellNF: false, cellHTML: false, cellText: false };
 const SHEET_OCA = 'MASTER HORARIOS PARA UXXI';
@@ -1445,7 +1445,7 @@ function expectedUX(s, catalog) {
   };
 }
 // Las plantillas de la carpeta compartida de la OCA son el origen normal de la hoja Tablas.
-const isOcaLink = path => /ocaeco|UNITAT D'OCA/i.test(path);
+const isOcaLink = path => /ocaeco|UNITAT D'OCA/i.test(path) || !/^([a-z]:|[\/]{1,2}|file:|https?:)/i.test(String(path).trim());
 const UX_FIELD_LBL = { F: 'día (F)', J: 'aula (J)', W: 'actividad (W)', X: 'grupo (X)', Z: 'fecha inicio (Z)', AA: 'fecha fin (AA)', AB: 'día semana (AB)', AC: 'hora inicio (AC)', AD: 'minuto inicio (AD)', AE: 'hora fin (AE)', AF: 'minuto fin (AF)', AG: 'código aula (AG)', AH: 'código edificio (AH)' };
 function uxShow(k, v) {
   if (v == null || v === '') return '—';
@@ -1538,7 +1538,7 @@ function parseGrados(wb, sheet) {
     const info = { fila, caula: caulaT, aula: val(r, c.aula), cod: val(r, c.cod), asig: val(r, c.asig), grp: val(r, c.grp), dia: val(r, c.dia), hi: val(r, c.hi), hf: val(r, c.hf) };
     if (c.caula >= 0 && caulaT) {
       if (!aula) { aula = fromCaula(caulaT); rev.vacia.push({ ...info, usa: aula }); }
-      else if (!toks.includes(aula) && toks.some(t => known.has(t))) rev.distinta.push({ ...info, otra: toks.find(t => known.has(t)) });
+      else if (!toks.includes(aula)) { const otra = toks.find(t => known.has(t)) || (/^[A-Z]{1,2}\d/.test(fromCaula(caulaT)) ? fromCaula(caulaT) : ''); if (otra && otra !== aula) rev.distinta.push({ ...info, otra }); }
     }
     const wd = DIAS_SEM[norm(r[c.dia])], a = parseTime(r[c.hi]), b = parseTime(r[c.hf]), ini = parseDate(r[c.ini]), fin = parseDate(r[c.fin]);
     if (!aula || !wd || a == null || b == null || !ini || !fin || b <= a) { rev.invalidas.push({ ...info, motivo: !aula ? 'sin aula' : !wd ? 'día desconocido' : a == null || b == null || b <= a ? 'horas incorrectas' : 'fechas incorrectas' }); return; }
@@ -1967,9 +1967,13 @@ async function sync(force) {
     const hora = t => new Date(t).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     const quien = g.who.length ? g.who.map(esc).join(', ') : 'Alguien (el Excel no dice quién)';
     const que = [g.rows ? `${g.rows} fila(s) con cambios en las sesiones` : '', g.ux ? `${g.ux} fila(s) corregidas en las columnas para UXXI` : '', g.nuevas ? `${g.nuevas} fila(s) nuevas` : '', g.menos ? `${g.menos} fila(s) menos` : ''].filter(Boolean).join(', ') || 'sin cambios en los datos (solo formato u otras hojas)';
+    const nada = !g.rows && !g.ux && !g.nuevas && !g.menos && g.before.sol === a.sol && g.before.pend === a.pend && g.before.rev === a.rev;
+    if (nada) { if (old) APP.notices = APP.notices.filter(x => x !== old); renderNotice(); }
+    else {
     const html = `<b>${quien} ${g.who.length > 1 ? 'han' : 'ha'} guardado el Excel de horarios</b> ${g.veces > 1 ? `${g.veces} veces (de ${hora(g.first)} a ${hora(g.last)})` : `(${fmtWhen(g.last)})`}: ${que}. ${[delta('Solapes', g.before.sol, a.sol), delta('Pendiente de UXXI', g.before.pend, a.pend), delta('Filas a revisar', g.before.rev, a.rev)].filter(Boolean).join(' · ')}.`;
     if (old) Object.assign(old, { html, agg: g, at: new Date().toISOString() }); else APP.notices.push({ id: rid(), kind: 'oca', html, link: 'historial', agg: g, at: new Date().toISOString() });
     renderNotice();
+    }
   }
   if (QUEUE.length && !APP.flushing) flush();
 }
@@ -2739,7 +2743,7 @@ function renderOcc() {
     <span>${APP.grados.length ? dayGs.length + ' clases de grado' : 'sin horario de grados cargado'}</span>
     ${nConf ? `<span class="tag bad">${nConf} solape${nConf > 1 ? 's' : ''}</span>` : '<span class="tag ok">sin solapes</span>'}</div>
     <div class="legend">${codes.map(c => `<span>${mTag(c)}</span>`).join('')}
-    <span><i class="lg-grado"></i>Clase de grado (solo consulta: viene del horario de grados${APP.gradosFile ? ', ' + esc(APP.gradosFile.name) : ''})</span>
+    <span><i class="lg-grado"></i>Clase de grado (del horario de grados${APP.gradosFile ? ', ' + esc(APP.gradosFile.name) : ''})</span>
     <span><i style="outline:2px solid var(--bad);background:transparent"></i>Solape</span>${resvLegend()}</div>`;
   D.occG = [];
   if (!list.length) { $('#occ').innerHTML = `<div class="empty">No hay actividad el ${DIA_N[wd].toLowerCase()} ${fmtDate(date)}${UI.o.show === 'masteres' ? ' en aulas con másteres' : ''}.</div>`; return; }
@@ -3593,7 +3597,7 @@ async function crearCopiaRevision() {
     const puestos = new Set();
     for (const role of ROLES) {
       const src = APP.src && APP.src[role]; if (!src || !src.fh) continue;
-      try { const f = await src.fh.getFile(); if (puestos.has(f.name)) continue; puestos.add(f.name); const b = await f.arrayBuffer(); add(f.name, b); n++; bytes += b.byteLength; resumen.archivos[role] = { nombre: f.name, guardado: new Date(f.lastModified).toISOString(), bytes: b.byteLength }; }
+      try { const f = await src.fh.getFile(); if (puestos.has(f.name)) continue; puestos.add(f.name); const b = await f.arrayBuffer(), enZip = f.name.replace(/[^ -~]/g, '_'); add(enZip, b); n++; bytes += b.byteLength; resumen.archivos[role] = { nombre: f.name, enZip, guardado: new Date(f.lastModified).toISOString(), bytes: b.byteLength }; }
       catch (e) { resumen.archivos[role] = { error: e.message }; }
     }
     // 2) la memoria de la herramienta
@@ -3643,7 +3647,7 @@ function renderUsuarios() {
   for (const r of normas()) if (r.por && !r.excel) get(r.por).normas++;
   for (const p of APP.presenceAll) { const x = get(p.user); if (p.lm > x.ult) Object.assign(x, { ult: p.lm, archivos: p.archivos, navegador: p.navegador, version: p.version }); }
   const now = Date.now(), L = [...byName.values()].filter(x => !x.baja).sort((a, b) => b.ult - a.ult);
-  const files = a => !a ? '<small>—</small>' : Object.entries(a).filter(([, v]) => v !== 'sin').map(([r, v]) => `<span class="tag ${v === 'ok' ? 'ok' : 'bad'}" title="${esc(ROLE_LBL[r])}">${v === 'ok' ? '✓' : '✗'} ${({ oca: 'másteres', directorio: 'directorio', grados: 'grados', contactos: 'contactos', aulas: 'listado de aulas' })[r]}</span>`).join(' ');
+  const files = a => !a ? '<small>—</small>' : Object.entries(a).filter(([, v]) => v !== 'sin').map(([r, v]) => `<span class="tag ${v === 'ok' ? 'ok' : 'bad'}" title="${esc(ROLE_LBL[r])}">${v === 'ok' ? '✓' : '✗'} ${({ oca: 'másteres', directorio: 'directorio', grados: 'grados', contactos: 'contactos', aulas: 'listado de aulas', examenes: 'cuadrante', examgrados: 'exámenes de grado' })[r] || r}</span>`).join(' ');
   $('#usuariosBody').innerHTML = `<p class="lead">Quién usa la herramienta. No hay contraseñas: cada persona escribe su nombre la primera vez en su navegador y desde entonces sus cambios, normas y fotos de UXXI llevan ese nombre. Aquí también se ve si a cada uno <b>le funcionan los archivos</b> en su ordenador.</p>
     <div class="panel"><div class="tablewrap"><table><thead><tr><th>Persona</th><th>Ahora</th><th>Última vez</th><th>Versión</th><th>Archivos en su ordenador</th><th>Cambios hechos</th><th>Normas puestas</th><th></th></tr></thead><tbody>
     ${L.map(x => `<tr><td><b>${esc(x.nombre)}</b>${slug(x.nombre) === slug(userName()) ? ' <span class="tag">tú</span>' : ''}${x.alta ? `<br><small>desde ${fmtWhen(x.alta)}</small>` : ''}</td>
@@ -4128,7 +4132,7 @@ async function guardarExamGrado() {
     if (d.comun.length) continue;
     if (f.fecha !== ev.fecha && !d.fx) set(d.hoja, d.fila, d.c, { num: isoToSerial(f.fecha) });
     if (f.turno !== ev.turno && d.tc != null) set(d.hoja, d.fila, d.tc, { str: f.turno === 'M' ? 'MAÑANA' : 'TARDE' });
-    if (cambiaAulas && d.manda && d.aCols) d.aCols.forEach((col, i) => set(d.hoja, d.fila, col, f.rooms[i] ? { str: f.rooms[i] } : { empty: true }));
+    if (cambiaAulas && d.manda && d.aCols) d.aCols.forEach((col, i) => set(d.hoja, d.fila, col, f.rooms[i] ? { str: /[a-z]/i.test(f.rooms[i]) ? f.rooms[i] : 'Aula ' + f.rooms[i] } : { empty: true }));
   }
   const desc = `${ev.cod} ${ev.asig} (${ev.plan}${ev.grupo ? ', grupo ' + ev.grupo : ''}): ${fmtDate(ev.fecha)} ${TURNO_LBL[ev.turno]} ${ev.rooms.join(', ')} → ${fmtDate(f.fecha)} ${TURNO_LBL[f.turno]} ${f.rooms.join(', ')}`;
   // 2) el cuadrante, calculado ANTES de escribir nada: qué verde se quita (si no lo usa otro examen) y cuál se pinta
