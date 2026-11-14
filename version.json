@@ -1,10 +1,10 @@
 {
- "version": "2026-11-14 10:49",
- "notas": "Manual de uso dentro de la herramienta (paso a paso), menu mas sencillo en tres grupos, accesos rapidos en el Resumen, arreglo del cambio de horario con solo el dia y un saludo de El Monstruo",
- "publicada": "2026-11-14T09:50:21.491Z",
+ "version": "2026-11-14 17:11",
+ "notas": "El Monstruo estrena aspecto: peludo, verde y con una hoja de calculo entre los dientes (rojo = solapes, naranja = pendiente de UXXI, verde = todo bien)",
+ "publicada": "2026-11-14T16:11:02.915Z",
  "app": {
   "file": "app.html",
-  "sha256": "46474f6487a820d2880496ff6bd18fb9ad03774556eb03fd4537965330e53904",
-  "firma": "wu8vp4dvYgu0r4C4jsRvQoflbXhX9nfbeh2pxQmbvYLmeTQRt7G1yvo0gWwh_-fLuAJy6kSEuUSc1TOHFYqRqQ"
+  "sha256": "cfd4b5c8beec6fe127d432aa141f728c573721a827a03f72a7144eeb90ffaeea",
+  "firma": "7mN6kpNgFTw9QVdd98b08Z2Ip9XBVKoCrTWV5-Fr4TiLQrdISUuUJ3M12M9O4zrxKwLsJlMLhjVmN8omnsSPDw"
  }
 }

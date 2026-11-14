@@ -640,11 +640,13 @@ option.optm{font-weight:700}
 .ebadge.bad{background:var(--bad)}.ebadge.ok{background:var(--ok)}
 .eflow{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.eflow ol{margin:6px 0 0;padding-left:18px;font-size:13px}
 .mon{display:flex;align-items:center;gap:14px;margin:0 0 14px}
-.mon svg{flex:none;width:92px;height:98px;cursor:pointer;overflow:visible}
+.mon svg{flex:none;width:104px;height:110px;cursor:pointer;overflow:visible}
 .mon .mbody{animation:monbob 4s ease-in-out infinite;transform-origin:60px 104px}
-.mon .meye{animation:monblink 5.5s infinite;transform-origin:60px 52px}
+.mon .meye{animation:monblink 5.5s infinite;transform-origin:60px 38px}
+.mon .mcel{animation:moncel 2.4s ease-in-out infinite}
+@keyframes moncel{0%,100%{opacity:1}50%{opacity:.45}}
 .mon .mfall{animation:monfall 6s ease-in-out infinite}
-.mon svg.hola .marm{animation:monwave .9s ease-in-out 2;transform-origin:98px 82px}
+.mon svg.hola .marm{animation:monwave .9s ease-in-out 2;transform-origin:93px 77px}
 .mon svg.hola .mbody{animation:monjump .5s ease-out 1}
 .mon .mtxt b{display:block;font-size:19px;letter-spacing:-.01em}.mon .mtxt span{color:var(--muted)}
 .mon .mtxt small{display:block;color:var(--muted);opacity:.8;margin-top:2px;font-size:11.5px}
@@ -1263,7 +1265,7 @@ const PAGE = 100;
 const T0 = 8 * 60, T1 = 22 * 60;
 const APP_DIR = '_NO_TOCAR_datos_herramienta';
 const SYNC_MS = 10000;
-const APP_VERSION = '2026-11-14 10:49';
+const APP_VERSION = '2026-11-14 17:11';
 const LOCK_MS = 60000;
 const READ_OPTS = { type: 'array', cellFormula: true, cellNF: false, cellHTML: false, cellText: false };
 const SHEET_OCA = 'MASTER HORARIOS PARA UXXI';
@@ -2718,38 +2720,60 @@ function epocaDelAnyo(d) {
   return 'otono';
 }
 const MON = {
-  otono: { c: '#8a72d8', ico: '🍂', f: ['Me he puesto la bufanda: ya huele a castañas.', 'Otoño: caen las hojas, pero las aulas siguen en su sitio.', 'Con este fresquito se cuadran mejor los horarios.', 'He barrido las hojas del Aulario Sur. De nada.'] },
-  halloween: { c: '#7a5cc7', ico: '🎃', f: ['¡Buuu! Tranquilos, solo asusto a los solapes.', 'Esta semana doy un poquito más de miedo de lo normal.', 'Truco o trato: yo pongo el aula, vosotros los caramelos.'] },
-  navidad: { c: '#5fae6b', ico: '🎄', f: ['Jo, jo, jo. Este año me he portado bien: no he pisado ningún Excel.', 'He pedido a los Reyes un curso sin solapes.', 'Felices fiestas, equipo. El turrón, lejos del teclado.', 'Ya huele a vacaciones. Venga, que queda poco.'] },
-  invierno: { c: '#5b8fd9', ico: '❄️', f: ['Qué frío. Yo me quedo aquí dentro, cuidando los horarios.', 'Con gorro se piensa mejor. Probadlo.', 'Un café calentito y a por el día.'] },
-  fallas: { c: '#e2733a', ico: '🔥', f: ['Bones Falles! Prometo no tirar petardos en el Aulario.', 'Huele a pólvora y a buñuelos. Hoy cuadramos pronto.', 'Senyor pirotècnic, pot començar... a revisar els horaris.'] },
-  primavera: { c: '#8a7be8', ico: '🌸', f: ['Me ha salido una flor. Será la primavera.', 'Buen día para abrir las ventanas… y cerrar solapes.', 'Con este sol, hasta UXXI parece simpático.'] },
-  verano: { c: '#35b3a6', ico: '😎', f: ['Con gafas de sol los solapes se ven igual, pero con más estilo.', 'Qué calor. Yo sigo aquí, a la sombra del Aulario.', 'Ya queda menos para las vacaciones.'] },
+  otono: { ico: '🍂', f: ['Se me han pegado dos hojas al pelo: ya huele a castañas.', 'Otoño: caen las hojas, pero las aulas siguen en su sitio.', 'Con este fresquito se cuadran mejor los horarios.', 'He barrido las hojas del Aulario Sur. De nada.'] },
+  halloween: { ico: '🎃', f: ['¡Buuu! Tranquilos, solo asusto a los solapes.', 'Esta semana doy un poquito más de miedo de lo normal.', 'Truco o trato: yo pongo el aula, vosotros los caramelos.'] },
+  navidad: { ico: '🎄', f: ['Jo, jo, jo. Este año me he portado bien: no he pisado ningún Excel.', 'He pedido a los Reyes un curso sin solapes.', 'Felices fiestas, equipo. El turrón, lejos del teclado.', 'Ya huele a vacaciones. Venga, que queda poco.'] },
+  invierno: { ico: '❄️', f: ['Qué frío. Yo me quedo aquí dentro, cuidando los horarios.', 'Con gorro se piensa mejor. Probadlo.', 'Un café calentito y a por el día.'] },
+  fallas: { ico: '🔥', f: ['Bones Falles! Prometo no tirar petardos en el Aulario.', 'Huele a pólvora y a buñuelos. Hoy cuadramos pronto.', 'Senyor pirotècnic, pot començar... a revisar els horaris.'] },
+  primavera: { ico: '🌸', f: ['Me ha salido una flor. Será la primavera.', 'Buen día para abrir las ventanas… y cerrar solapes.', 'Con este sol, hasta UXXI parece simpático.'] },
+  verano: { ico: '😎', f: ['Con gafas de sol los solapes se ven igual, pero con más estilo.', 'Qué calor. Yo sigo aquí, a la sombra del Aulario.', 'Ya queda menos para las vacaciones.'] },
 };
-function monstruoSvg(ep) {
-  const c = (MON[ep] || MON.otono).c, sombrero = /navidad|invierno|halloween/.test(ep);
-  const cuernos = sombrero ? '' : '<path d="M40 31c-6-7-7-14-3-20 4 4 9 8 13 14z" fill="#f4d58d"/><path d="M80 31c6-7 7-14 3-20-4 4-9 8-13 14z" fill="#f4d58d"/>';
-  const bufanda = col => `<path d="M27 80q33 13 66 0l2 10q-35 14-70 0z" fill="${col}"/><path d="M68 90l11-3 5 19-11 3z" fill="${col}"/><path d="M71 101l11-3M70 96l11-3" stroke="rgba(255,255,255,.55)" stroke-width="2"/>`;
+// «El de las celdas»: un monstruo peludo y verde que lleva una hoja de cálculo entre los dientes. Sus seis celdas cuentan cómo va el día:
+// rojas = solapes por resolver, naranjas = cambios pendientes de UXXI, verdes = todo bien. est = {sol, pen} (null = sin datos)
+function monPelo(cx, cy, rx, ry, n, amp, seed) {
+  const az = i => { const x = Math.sin(i * 12.9898 + seed) * 43758.5453; return x - Math.floor(x); };
+  let d = '';
+  for (let i = 0; i < n * 2; i++) { const a = i / (n * 2) * Math.PI * 2, f = i % 2 ? 1 + amp * (.55 + .45 * az(i)) : 1 - amp * .25 * az(i + 7); d += (i ? 'L' : 'M') + (cx + rx * f * Math.sin(a + (az(i + 3) - .5) * .06)).toFixed(1) + ' ' + (cy - ry * f * Math.cos(a)).toFixed(1); }
+  return d + 'z';
+}
+function monstruoSvg(ep, est) {
+  const P = '#9cc13c', P2 = '#6f9a2e', N = '#f2a531', N2 = '#d98a1c', mal = est && est.sol > 0;
+  const tapado = /navidad|invierno|halloween|fallas/.test(ep);
+  // antenitas con la punta naranja (flores en primavera); con sombrero solo quedan las de los lados
+  const ant = [[38, 22, 30, 4], [80, 20, 90, 3], [27, 40, 10, 30], [94, 44, 112, 36]].filter((q, i) => !tapado || i > 1).map(([x1, y1, x2, y2], i) => `<path d="M${x1} ${y1}Q${(x1 + x2) / 2 + (i % 2 ? 3 : -3)} ${(y1 + y2) / 2 - 3} ${x2} ${y2}" fill="none" stroke="${P2}" stroke-width="2.2" stroke-linecap="round"/>` + (ep === 'primavera'
+    ? `<g transform="translate(${x2} ${y2})" fill="#f79ac0"><circle cy="-4.4" r="3.2"/><circle cx="4.2" cy="-1.3" r="3.2"/><circle cx="2.6" cy="3.6" r="3.2"/><circle cx="-2.6" cy="3.6" r="3.2"/><circle cx="-4.2" cy="-1.3" r="3.2"/><circle r="2.6" fill="#ffd34d"/></g>`
+    : `<ellipse cx="${x2}" cy="${y2}" rx="3.4" ry="4.4" fill="${N}" transform="rotate(${i % 2 ? 25 : -25} ${x2} ${y2})"/>`)).join('');
+  const hoja = (x, y, r, c) => `<path d="M0 0c5-7 12-7 16-2-4 7-11 9-16 2z" fill="${c}" transform="translate(${x} ${y}) rotate(${r})"/>`;
   const extra = {
-    otono: bufanda('#e58a2e') + '<g class="mfall"><path d="M0 0c5-7 12-7 16-2-4 7-11 9-16 2z" fill="#d9772b" transform="translate(98 6)"/></g><path d="M0 0c5-7 12-7 16-2-4 7-11 9-16 2z" fill="#c9a227" transform="translate(4 100) rotate(-25)"/>',
-    halloween: '<ellipse cx="60" cy="30" rx="38" ry="6.5" fill="#2e2147"/><path d="M40 30L64-6l14 36z" fill="#2e2147"/><path d="M45 23l28 1 2 6H42z" fill="#e58a2e"/>',
-    navidad: '<path d="M28 33Q52-4 100 12Q84 16 90 33z" fill="#d6332f"/><rect x="24" y="27" width="70" height="11" rx="5.5" fill="#fff"/><circle cx="101" cy="12" r="7" fill="#fff"/>' + bufanda('#d6332f'),
-    invierno: '<path d="M30 32Q60-6 90 32z" fill="#e5533d"/><rect x="26" y="27" width="68" height="10" rx="5" fill="#fff"/><circle cx="60" cy="9" r="7" fill="#fff"/>' + bufanda('#f1f4f9') + '<g class="mfall" fill="#fff"><circle cx="104" cy="8" r="2.2"/><circle cx="12" cy="20" r="1.8"/></g>',
-    fallas: '<path d="M30 80h60L60 104z" fill="#2b62c9"/><path d="M38 84h44M45 90h30M52 96h16" stroke="#fff" stroke-width="2" stroke-dasharray="4 4"/>',
-    primavera: '<g transform="translate(84 20)"><circle cx="0" cy="-7" r="5" fill="#f79ac0"/><circle cx="7" cy="-2" r="5" fill="#f79ac0"/><circle cx="4" cy="6" r="5" fill="#f79ac0"/><circle cx="-4" cy="6" r="5" fill="#f79ac0"/><circle cx="-7" cy="-2" r="5" fill="#f79ac0"/><circle r="4" fill="#ffd34d"/></g>',
-    verano: '<rect x="32" y="43" width="26" height="17" rx="7" fill="#1d2633"/><rect x="62" y="43" width="26" height="17" rx="7" fill="#1d2633"/><path d="M56 49h8M32 49l-9-4M88 49l9-4" stroke="#1d2633" stroke-width="3"/><path d="M37 48l6-2M67 48l6-2" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round"/>',
+    otono: hoja(64, 12, -20, '#d9772b') + hoja(30, 30, 30, '#c9a227') + `<g class="mfall">${hoja(102, -2, 0, '#d9772b')}</g>` + hoja(0, 112, -25, '#c9a227'),
+    halloween: '<ellipse cx="60" cy="20" rx="40" ry="6.5" fill="#2e2147"/><path d="M40 20L64-17l14 37z" fill="#2e2147"/><path d="M45 13l28 1 2 6H42z" fill="#e58a2e"/>',
+    navidad: '<path d="M30 24Q54-13 104 3Q88 8 92 24z" fill="#d6332f"/><rect x="26" y="16" width="70" height="11" rx="5.5" fill="#fff"/><circle cx="105" cy="3" r="7" fill="#fff"/><g class="mfall" fill="#fff"><circle cx="12" cy="6" r="2.2"/><circle cx="112" cy="30" r="1.8"/></g>',
+    invierno: '<path d="M30 22Q60-15 90 22z" fill="#e5533d"/><path d="M40 12l6-7M52 6l5-8M66 6l-2-9M78 11l-5-8" stroke="rgba(255,255,255,.5)" stroke-width="2"/><rect x="26" y="15" width="68" height="10" rx="5" fill="#fff"/><circle cx="60" cy="0" r="7" fill="#fff"/><g class="mfall" fill="#fff"><circle cx="108" cy="2" r="2.2"/><circle cx="10" cy="14" r="1.8"/></g>',
+    fallas: '<path d="M29 27Q60 6 91 27l-2-9Q60-3 31 18z" fill="#2b62c9"/><path d="M33 21Q60 3 87 21" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="4 4"/><path d="M90 22l10-3-3 9zM91 25l8 6-9 2z" fill="#2b62c9"/><circle cx="91" cy="24" r="3.4" fill="#1f4da3"/>',
+    verano: '<circle cx="45" cy="41" r="13" fill="#1d2633"/><circle cx="73" cy="37" r="16" fill="#1d2633"/><path d="M33 38l-9-3M89 34l9-3" stroke="#1d2633" stroke-width="3" stroke-linecap="round"/><path d="M39 36l7-3M65 31l9-4" stroke="rgba(255,255,255,.6)" stroke-width="2.2" stroke-linecap="round"/>',
   }[ep] || '';
-  return `<svg viewBox="-4 -10 128 126" role="img" aria-label="El Monstruo" data-monhola><title>El Monstruo (pulsa para saludar)</title>
-    <ellipse cx="60" cy="110" rx="34" ry="4" fill="rgba(20,35,60,.13)"/>
+  // la hoja de cálculo que lleva entre los dientes
+  const n = est ? Math.min(6, est.sol) : 0, m = est ? Math.min(6 - n, est.pen) : 0;
+  const celdas = [0, 1, 2, 3, 4, 5].map(i => { const col = i < n ? '#e5484d' : i < n + m ? '#f0a23b' : est ? '#9fdcb9' : '#dfe3e8'; return `<rect ${i < n ? 'class="mcel" ' : ''}x="${34 + (i % 3) * 18}" y="${65 + (i / 3 | 0) * 13}" width="16.4" height="11.4" rx="2" fill="${col}"/>`; }).join('');
+  const dedos = (x, cls) => `<g${cls ? ` class="${cls}"` : ''}>${[70, 77, 84].map(y => `<ellipse cx="${x}" cy="${y}" rx="6.5" ry="4" fill="${N}" stroke="${N2}" stroke-width=".8"/>`).join('')}</g>`;
+  const ojo = (x, y, r) => { const dy = mal ? r * .28 : 0; return `<circle cx="${x}" cy="${y}" r="${r + 2.2}" fill="${P2}"/><circle cx="${x}" cy="${y}" r="${r}" fill="#fbf8ee"/><circle cx="${x + 1}" cy="${y + 1 + dy}" r="${(r * .5).toFixed(1)}" fill="#2aa3a3"/><circle cx="${x + 1}" cy="${y + 1 + dy}" r="${(r * .27).toFixed(1)}" fill="#12202b"/><circle cx="${x + 1 + r * .22}" cy="${y + 1 + dy - r * .22}" r="${(r * .12).toFixed(1)}" fill="#fff"/>`; };
+  const tip = !est ? 'El Monstruo' : `El Monstruo · en su hoja: ${est.sol ? est.sol + ' solape' + (est.sol === 1 ? '' : 's') + ' (rojo)' : 'sin solapes'}, ${est.pen ? est.pen + ' pendiente' + (est.pen === 1 ? '' : 's') + ' de UXXI (naranja)' : 'nada pendiente de UXXI'}`;
+  return `<svg viewBox="-6 -20 132 138" role="img" aria-label="${tip}" data-monhola><title>${tip}. Pulsa para saludar.</title>
+    <ellipse cx="60" cy="114" rx="36" ry="3.6" fill="rgba(20,35,60,.13)"/>
     <g class="mbody">
-      <ellipse cx="44" cy="105" rx="11" ry="6" fill="${c}"/><ellipse cx="76" cy="105" rx="11" ry="6" fill="${c}"/>
-      <ellipse cx="20" cy="82" rx="8" ry="11" fill="${c}"/><ellipse class="marm" cx="100" cy="82" rx="8" ry="11" fill="${c}"/>
-      ${cuernos}
-      <path d="M20 76c0-33 14-52 40-52s40 19 40 52c0 20-11 28-40 28S20 96 20 76z" fill="${c}"/>
-      <ellipse cx="60" cy="88" rx="22" ry="12" fill="rgba(255,255,255,.2)"/>
-      <circle cx="33" cy="64" r="5" fill="rgba(255,120,150,.35)"/><circle cx="87" cy="64" r="5" fill="rgba(255,120,150,.35)"/>
-      <g class="meye"><circle cx="46" cy="52" r="11" fill="#fff"/><circle cx="74" cy="52" r="11" fill="#fff"/><circle cx="48" cy="53" r="5" fill="#1d2633"/><circle cx="76" cy="53" r="5" fill="#1d2633"/><circle cx="50" cy="51" r="1.7" fill="#fff"/><circle cx="78" cy="51" r="1.7" fill="#fff"/></g>
-      <path d="M47 67q13 11 26 0" fill="none" stroke="#1d2633" stroke-width="3" stroke-linecap="round"/><path d="M53 70.5l6 1.8-.6 5-5.4-2z" fill="#fff"/>
+      <rect x="43" y="96" width="10" height="13" fill="${N2}"/><rect x="67" y="96" width="10" height="13" fill="${N2}"/>
+      <path d="M33 111c0-6 6-8 13-8s12 3 12 8z" fill="${N}"/><path d="M62 111c0-6 6-8 13-8s12 3 12 8z" fill="${N}"/>
+      <path d="M40 111v-3M46 111v-3M69 111v-3M75 111v-3" stroke="${N2}" stroke-width="1.2" stroke-linecap="round"/>
+      ${ant}
+      <path d="${monPelo(60, 62, 37, 42, 26, .16, 3)}" fill="${P2}" stroke="${P2}" stroke-width="2" stroke-linejoin="round"/>
+      <path d="${monPelo(60, 59, 33, 38, 22, .15, 11)}" fill="${P}" stroke="${P}" stroke-width="2" stroke-linejoin="round"/>
+      <path d="${monPelo(59, 42, 24, 17, 14, .12, 5)}" fill="#b7d65a" opacity=".75"/>
+      <g class="meye">${ojo(45, 41, 11)}${ojo(73, 37, 14)}</g>
+      ${mal ? '<path d="M96 30q4 6 0 9q-4-3 0-9z" fill="#7cc6ee"/>' : ''}
+      <ellipse cx="60" cy="58" rx="24" ry="4.5" fill="#3d5a17"/>
+      <g transform="rotate(-3 60 78)"><rect x="29" y="59" width="62" height="36" rx="2.5" fill="#f6efdc" stroke="#d9cdb0" stroke-width="1"/>${celdas}</g>
+      <path d="M39 55l4.5 9 4.5-8 4 9 5-9 4.500 9 4.500-9 4.500 8 4-8 3 7 3-8z" fill="#fff" stroke="#e6e0cf" stroke-width=".6" stroke-linejoin="round"/>
+      ${dedos(29)}${dedos(92, 'marm')}
       ${extra}
     </g></svg>`;
 }
@@ -2757,11 +2781,15 @@ function renderMonstruo(otra) {
   const el = $('#monstruo'); if (!el) return;
   const d = new Date(), ep = epocaDelAnyo(d), M = MON[ep] || MON.otono, h = d.getHours();
   const hola = h < 6 ? 'Buenas noches' : h < 14 ? 'Buenos días' : h < 21 ? 'Buenas tardes' : 'Buenas noches';
-  const act = APP.xl ? D.conflicts.filter(c => !c.accepted).length : null;
-  const frases = M.f.concat(act === 0 ? ['Hoy no muerdo a nadie: cero solapes.', 'Todo en su sitio. Así da gusto ser un monstruo.'] : act ? [`Tengo ${act} solape${act === 1 ? '' : 's'} entre los dientes. ¿Me ${act === 1 ? 'lo' : 'los'} quitáis?`] : []);
-  UI.monN = otra ? (UI.monN + 1) % frases.length : (UI.monN != null ? UI.monN % frases.length : (d.getDate() + d.getMonth()) % frases.length);
+  const est = APP.xl ? { sol: D.conflicts.filter(c => !c.accepted).length, pen: (D.pending || []).length } : null;
+  const frases = M.f.concat(!est ? [] : est.sol ? [`Tengo ${est.sol} celda${est.sol === 1 ? '' : 's'} en rojo en la hoja: ${est.sol === 1 ? 'un solape' : est.sol + ' solapes'}. ¿Me ${est.sol === 1 ? 'lo' : 'los'} quitáis?`]
+    : est.pen ? [`Sin solapes. Me ${est.pen === 1 ? 'queda una celda naranja' : 'quedan celdas naranjas'}: ${est.pen} cambio${est.pen === 1 ? '' : 's'} por pasar a UXXI.`]
+    : ['Todas mis celdas en verde. Así da gusto ser un monstruo.', 'Hoy no muerdo a nadie: cero solapes y nada pendiente.']);
+  // si hay algo que atender, lo primero que dice es eso; si no, la frase del día
+  const ini = est && (est.sol || est.pen) ? M.f.length : (d.getDate() + d.getMonth()) % frases.length;
+  UI.monN = otra ? ((UI.monN != null ? UI.monN : ini) + 1) % frases.length : (UI.monN != null ? UI.monN % frases.length : ini);
   const nom = userName();
-  el.innerHTML = monstruoSvg(ep) + `<div class="mtxt"><b>${hola}${nom ? ', ' + esc(nom.split(' ')[0]) : ''} ${M.ico}</b><span>${esc(frases[UI.monN])}</span><small>— El Monstruo</small></div>`;
+  el.innerHTML = monstruoSvg(ep, est) + `<div class="mtxt"><b>${hola}${nom ? ', ' + esc(nom.split(' ')[0]) : ''} ${M.ico}</b><span>${esc(frases[UI.monN])}</span><small>— El Monstruo</small></div>`;
   if (otra) { const sv = el.querySelector('svg'); if (sv) sv.classList.add('hola'); }
 }
 function renderResumen() {
@@ -5437,13 +5465,14 @@ function renderAyuda() {
         'Para volver a trabajar, pulsa <b>Salir de «Solo mirar»</b>.'],
         '', ir('carpeta'))}
     </div>
-    <h2 class="sec">Seis cosas que conviene saber</h2>
+    <h2 class="sec">Siete cosas que conviene saber</h2>
     <div class="panel pad"><ol class="saber">
       <li><b>Los Excel siguen siendo vuestros.</b> Cada cambio se escribe en el Excel que toca, en unos segundos y sin estropear el formato ni las fórmulas.</li>
       <li><b>Podéis seguir cambiando a mano en Excel.</b> La herramienta lo detecta, lo vuelve a leer y avisa a todos de qué cambió.</li>
       <li><b>Nadie pisa a nadie.</b> Si dos personas guardan a la vez, va uno y luego el otro. Si alguien tiene el Excel abierto, espera a que lo cierre.</li>
       <li><b>UXXI se cambia siempre a mano.</b> La herramienta solo lleva la cuenta de lo que falta.</li>
       <li><b>Se actualiza sola.</b> Cuando hay versión nueva, al abrirla sale «✨ Herramienta actualizada». No hay que copiar nada.</li>
+      <li><b>El Monstruo</b> del Resumen lleva una hoja de cálculo entre los dientes: celdas <b>rojas</b> = solapes por resolver, <b>naranjas</b> = cambios pendientes de UXXI, todas <b>verdes</b> = todo bien. Cambia de ropa con la época del año; si le pulsas, saluda.</li>
       <li><b>El botón «?»</b> junto al título explica la pantalla en la que estás, y la 🔔 enseña lo que han hecho los demás.</li>
     </ol></div>
     <h2 class="sec">Qué hay en cada apartado</h2>
