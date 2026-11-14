@@ -639,6 +639,34 @@ option.optm{font-weight:700}
 .eown{align-self:flex-start;background:var(--bad);color:#fff;border-radius:10px;padding:0 7px;font-size:11px;font-weight:600}.enode[style*="50%;top:50%"]{width:230px;border-width:3px}
 .ebadge.bad{background:var(--bad)}.ebadge.ok{background:var(--ok)}
 .eflow{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.eflow ol{margin:6px 0 0;padding-left:18px;font-size:13px}
+.mon{display:flex;align-items:center;gap:14px;margin:0 0 14px}
+.mon svg{flex:none;width:92px;height:98px;cursor:pointer;overflow:visible}
+.mon .mbody{animation:monbob 4s ease-in-out infinite;transform-origin:60px 104px}
+.mon .meye{animation:monblink 5.5s infinite;transform-origin:60px 52px}
+.mon .mfall{animation:monfall 6s ease-in-out infinite}
+.mon svg.hola .marm{animation:monwave .9s ease-in-out 2;transform-origin:98px 82px}
+.mon svg.hola .mbody{animation:monjump .5s ease-out 1}
+.mon .mtxt b{display:block;font-size:19px;letter-spacing:-.01em}.mon .mtxt span{color:var(--muted)}
+.mon .mtxt small{display:block;color:var(--muted);opacity:.8;margin-top:2px;font-size:11.5px}
+@keyframes monbob{0%,100%{transform:scale(1,1)}50%{transform:scale(1.015,.985)}}
+@keyframes monblink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.08)}}
+@keyframes monwave{0%,100%{transform:rotate(0)}50%{transform:rotate(-38deg)}}
+@keyframes monjump{0%,100%{transform:translateY(0)}40%{transform:translateY(-7px)}}
+@keyframes monfall{0%{transform:translate(0,-6px) rotate(0);opacity:0}15%{opacity:1}100%{transform:translate(-14px,46px) rotate(70deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.mon *{animation:none!important}}
+@media print{.mon{display:none}}
+.manlink{margin:-4px 0 14px;font-size:13.5px}.manlink a{cursor:pointer;color:var(--accent)}
+.man{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:10px;align-items:start}
+.man details{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:0 16px;box-shadow:var(--shadow)}
+.man summary{cursor:pointer;font-weight:650;padding:13px 0;list-style:none;display:flex;gap:10px;align-items:center}
+.man summary::-webkit-details-marker{display:none}.man summary::after{content:"＋";margin-left:auto;color:var(--muted);font-weight:400}
+.man details[open] summary::after{content:"－"}.man details[open]{border-color:var(--accent)}
+.man summary .mi{font-size:20px;line-height:1}.man summary small{display:block;font-weight:400;color:var(--muted)}
+.man ol{margin:0 0 10px;padding-left:20px}.man ol li{margin:5px 0;line-height:1.45}
+.man .mn{margin:0 0 10px;padding:8px 10px;border-radius:9px;background:var(--accent-soft);font-size:13px}
+.man .mb{margin:0 0 14px;display:flex;gap:6px;flex-wrap:wrap}
+.saber{margin:0;padding-left:20px}.saber li{margin:6px 0;line-height:1.45}
+@media print{.man details{break-inside:avoid;box-shadow:none}}
 .faq details{border-bottom:1px solid var(--line);padding:8px 0}.faq summary{cursor:pointer;font-weight:600}.faq p{margin:6px 0 0;color:var(--muted)}
 .errbar ul{margin:4px 0 0;padding-left:18px}.errbar li{margin:2px 0}.errbar a{cursor:pointer;text-decoration:underline;text-decoration-style:dotted;margin-right:2px}.errbar a:hover{text-decoration-style:solid}
 #notice .alert.errbar{align-items:flex-start}.errbar.ok{padding-top:6px;padding-bottom:6px}.errmini{margin:8px 24px 0;text-align:right}.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
@@ -723,6 +751,10 @@ tr.more-hid{display:none}.more-row td{text-align:center;background:var(--panel2)
 .mostrarp>small{color:var(--muted)}.mrow{display:flex;gap:10px;align-items:flex-start;padding:6px;border-radius:8px;cursor:pointer}.mrow:hover{background:var(--accent-soft)}.mrow span{display:flex;flex-direction:column;gap:2px}.mrow small{color:var(--muted);font-size:12px;line-height:1.35}.mrow input{margin-top:3px}.mostrarp{max-height:70vh;overflow:auto}.msub{border-top:1px solid var(--line);padding-top:8px;display:flex;flex-direction:column;gap:4px}.msub>small{color:var(--muted)}.msub .mrow{padding:4px 6px}
 .okline{margin:0 0 12px;color:var(--ok);font-size:13px}.okline summary{cursor:pointer}.okline ul{margin:6px 0 0;padding-left:20px;color:var(--muted)}
 .copiap{margin-top:18px}.copiap h3{margin:0 0 6px}
+.hoyq{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.hoyb{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);cursor:pointer;font:inherit;box-shadow:var(--shadow);transition:transform .12s,border-color .12s}
+.hoyb:hover{transform:translateY(-2px);border-color:var(--accent)}.hoyb .qi{font-size:22px;line-height:1}.hoyb b{font-size:14.5px}.hoyb small{color:var(--muted);line-height:1.3}
+@media (max-width:900px){.hoyq{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* ayuda */
 .goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:18px 0}
 .goal{padding:14px 16px;border-top:4px solid var(--accent)}
@@ -889,24 +921,22 @@ input,select,textarea{border-radius:9px}
   </div>
   <nav class="nav" id="nav">
     <button data-view="resumen"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M1 1h6v8H1zM9 1h6v5H9zM9 8h6v7H9zM1 11h6v4H1z"/></svg>Resumen</button>
+    <button data-view="ayuda"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 1a7 7 0 110 14A7 7 0 018 1zm0 10a1 1 0 100 2 1 1 0 000-2zm0-7a2.5 2.5 0 00-2.5 2.5h1.6A.9.9 0 118 7.4c-.6.3-1 .8-1 1.6V10h1.6v-.7c0-.3.1-.4.5-.6A2.5 2.5 0 008 4z"/></svg>Manual de uso</button>
     <div class="sec">Día a día</div>
     <button data-view="calendario"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M2 3h12v11H2zm1 3v7h10V6zM4 1h2v3H4zm6 0h2v3h-2z"/></svg>Calendario de aulas</button>
-    <button data-view="solapes"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 1l7 13H1zm-1 5v4h2V6zm0 5v2h2v-2z"/></svg>Solapes<span class="cnt bad" id="nSol"></span></button>
     <button data-view="solicitudes"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M2 2h12v9H6l-4 3zm3 3v1.6h6V5zm0 2.8v1.6h4V7.8z"/></svg>Solicitudes<span class="cnt warn" id="nReq"></span></button>
-    <button data-view="sesiones"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M1 2h14v2H1zm0 5h14v2H1zm0 5h14v2H1z"/></svg>Sesiones</button>
-    <div class="sec">Aulas</div>
-    <button data-view="edificios"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M2 15V2h7v4h5v9H2zm2-11v2h2V4zm0 4v2h2V8zm0 4v2h2v-2zm6-4v2h2V8zm0 4v2h2v-2z"/></svg>Edificios</button>
-    <button data-view="normas"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 1a7 7 0 110 14A7 7 0 018 1zm0 2a5 5 0 00-4 8l7-7a5 5 0 00-3-1zm4 2l-7 7a5 5 0 007-7z"/></svg>Normas de aulas<span class="cnt" id="nNor"></span></button>
-    <div class="sec">UXXI y Excel</div>
+    <button data-view="solapes"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 1l7 13H1zm-1 5v4h2V6zm0 5v2h2v-2z"/></svg>Solapes<span class="cnt bad" id="nSol"></span></button>
     <button data-view="uxxi"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M2 2h12v12H2zm2 3v2h2V5zm3 0v2h5V5zm-3 4v2h2V9zm3 0v2h5V9z"/></svg>Pendiente de UXXI<span class="cnt warn" id="nUx"></span></button>
     <button data-view="revision"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M6.5 1a5.5 5.5 0 014.4 8.8l4 4-1.4 1.4-4-4A5.5 5.5 0 116.5 1zm0 2a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg>Revisión del Excel<span class="cnt bad" id="nRev"></span></button>
+    <div class="sec">Consultar</div>
+    <button data-view="sesiones"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M1 2h14v2H1zm0 5h14v2H1zm0 5h14v2H1z"/></svg>Sesiones</button>
+    <button data-view="edificios"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M2 15V2h7v4h5v9H2zm2-11v2h2V4zm0 4v2h2V8zm0 4v2h2v-2zm6-4v2h2V8zm0 4v2h2v-2z"/></svg>Edificios</button>
     <button data-view="historial"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 1a7 7 0 110 14A7 7 0 018 1zm0 2a5 5 0 100 10A5 5 0 008 3zm-1 1h2v4l3 2-1 1.6L7 9z"/></svg>Historial<span class="cnt bad" id="nHis"></span></button>
-    <div class="sec">Equipo y archivos</div>
-    <button data-view="encaje"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 6a2 2 0 110 4 2 2 0 010-4zM2 1h4v3H2zm8 0h4v3h-4zM2 12h4v3H2zm8 0h4v3h-4zM4 4v2l2.5 1M12 4v2L9.5 7M4 12v-2l2.5-1M12 12v-2l-2.5-1" stroke="currentColor" stroke-width="1"/></svg>Cómo encaja todo<span class="cnt bad" id="nEnc"></span></button>
+    <div class="sec">Configuración y ayuda</div>
+    <button data-view="normas"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 1a7 7 0 110 14A7 7 0 018 1zm0 2a5 5 0 00-4 8l7-7a5 5 0 00-3-1zm4 2l-7 7a5 5 0 007-7z"/></svg>Normas de aulas<span class="cnt" id="nNor"></span></button>
     <button data-view="carpeta"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M1 3h5l2 2h7v9H1z"/></svg>Carpeta y archivos</button>
     <button data-view="usuarios"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M6 2a3 3 0 110 6 3 3 0 010-6zm5 1a2.5 2.5 0 110 5 2.5 2.5 0 010-5zM1 14c0-3 2.2-5 5-5s5 2 5 5zm10.5 0c0-1.6-.5-3-1.5-4 2.6 0 5 1.3 5 4z"/></svg>Usuarios</button>
-    <div class="sec">Ayuda</div>
-    <button data-view="ayuda"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 1a7 7 0 110 14A7 7 0 018 1zm0 10a1 1 0 100 2 1 1 0 000-2zm0-7a2.5 2.5 0 00-2.5 2.5h1.6A.9.9 0 118 7.4c-.6.3-1 .8-1 1.6V10h1.6v-.7c0-.3.1-.4.5-.6A2.5 2.5 0 008 4z"/></svg>Cómo funciona</button>
+    <button data-view="encaje"><svg width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M8 6a2 2 0 110 4 2 2 0 010-4zM2 1h4v3H2zm8 0h4v3h-4zM2 12h4v3H2zm8 0h4v3h-4zM4 4v2l2.5 1M12 4v2L9.5 7M4 12v-2l2.5-1M12 12v-2l-2.5-1" stroke="currentColor" stroke-width="1"/></svg>Cómo encaja todo<span class="cnt bad" id="nEnc"></span></button>
   </nav>
   <div class="side-foot" id="sideFoot"></div>
 </aside>
@@ -928,6 +958,14 @@ input,select,textarea{border-radius:9px}
 
   <!-- RESUMEN -->
   <section class="view" id="v-resumen" hidden>
+    <div class="mon" id="monstruo"></div>
+    <div class="hoyq">
+      <button type="button" class="hoyb" data-reqnew><span class="qi">✉️</span><b>Un profesor pide un cambio</b><small>Otra aula, otro día u otra hora</small></button>
+      <button type="button" class="hoyb" data-buscar><span class="qi">🔎</span><b>Buscar</b><small>Un máster, una asignatura, un aula o un examen</small></button>
+      <button type="button" class="hoyb" data-goto="calendario"><span class="qi">📅</span><b>Ver las aulas</b><small>Qué hay en cada aula, día a día</small></button>
+      <button type="button" class="hoyb" data-goto="revision"><span class="qi">✅</span><b>Revisar los Excel</b><small>Lo que no cuadra, de uno en uno</small></button>
+    </div>
+    <p class="manlink"><a data-goto="ayuda">📖 ¿Primera vez o no sabes cómo se hace algo? Abre el <b>Manual de uso</b></a></p>
     <div id="resAlerts"></div>
     <div class="kpis" id="kpis"></div>
     <div class="panel pad">
@@ -1225,7 +1263,7 @@ const PAGE = 100;
 const T0 = 8 * 60, T1 = 22 * 60;
 const APP_DIR = '_NO_TOCAR_datos_herramienta';
 const SYNC_MS = 10000;
-const APP_VERSION = '2026-11-14 00:57';
+const APP_VERSION = '2026-11-14 10:49';
 const LOCK_MS = 60000;
 const READ_OPTS = { type: 'array', cellFormula: true, cellNF: false, cellHTML: false, cellText: false };
 const SHEET_OCA = 'MASTER HORARIOS PARA UXXI';
@@ -2391,14 +2429,14 @@ function computeLost() {
 }
 
 /* ---------- interfaz ---------- */
-const TITLES = { resumen: 'Resumen', calendario: 'Calendario de aulas', edificios: 'Edificios', solapes: 'Solapes', uxxi: 'Pendiente de UXXI', sesiones: 'Sesiones', revision: 'Revisión del Excel', historial: 'Historial', carpeta: 'Carpeta y archivos', ayuda: 'Cómo funciona', master: 'Máster', aula: 'Aula', solicitudes: 'Solicitudes', normas: 'Normas de aulas', usuarios: 'Usuarios', encaje: 'Cómo encaja todo' };
+const TITLES = { resumen: 'Resumen', calendario: 'Calendario de aulas', edificios: 'Edificios', solapes: 'Solapes', uxxi: 'Pendiente de UXXI', sesiones: 'Sesiones', revision: 'Revisión del Excel', historial: 'Historial', carpeta: 'Carpeta y archivos', ayuda: 'Manual de uso', master: 'Máster', aula: 'Aula', solicitudes: 'Solicitudes', normas: 'Normas de aulas', usuarios: 'Usuarios', encaje: 'Cómo encaja todo' };
 // Una frase bajo el título de cada pantalla: para qué sirve
 const SUBTITLES = {
   resumen: 'Cómo está todo de un vistazo', calendario: 'Qué hay en cada aula, hora a hora, un día concreto',
   edificios: 'Las aulas por edificio y planta: libres y ocupadas', solapes: 'Aulas reservadas dos veces a la misma hora, y cómo arreglarlo',
   uxxi: 'Lo que está en el Excel y todavía falta meter en UXXI', sesiones: 'Todas las sesiones del Excel; haz clic en una para cambiarla',
   revision: 'Errores del Excel que pueden acabar mal en UXXI', historial: 'Quién cambió qué y cuándo, y copias de cada versión del Excel',
-  carpeta: 'La carpeta compartida y qué es cada archivo', ayuda: 'Para qué sirve la herramienta y cómo se usa',
+  carpeta: 'La carpeta compartida y qué es cada archivo', ayuda: 'Qué se puede hacer y cómo, paso a paso',
   master: 'Todo sobre un máster: asignaturas, aulas, problemas y semana', normas: 'Aulas que no se sugieren nunca, quién lo decidió y por qué', usuarios: 'Quién usa la herramienta y si le funcionan los archivos', encaje: 'Vuestros Excel, cómo se cruzan y qué no cuadra entre ellos', solicitudes: 'Lo que piden los profesores: otra aula, más grande, otro edificio…', aula: 'Quién usa el aula y cuándo, semana a semana',
 };
 function setView(v) {
@@ -2600,7 +2638,7 @@ function initTips() {
 }
 
 /* ---------- Menú por categorías plegables ---------- */
-const navClosed = () => { try { return new Set(JSON.parse(localStorage.getItem('uvMasters.menuCerrado') || '[]')); } catch (e) { return new Set(); } };
+const navClosed = () => { try { return new Set(JSON.parse(localStorage.getItem('uvMasters.menuCerrado2') || '["Configuración y ayuda"]')); } catch (e) { return new Set(['Configuración y ayuda']); } };
 function buildNav() {
   const nav = $('#nav'), kids = [...nav.children];
   let grp = null;
@@ -2617,7 +2655,7 @@ function buildNav() {
     const h = e.target.closest('.nhead'); if (!h) return;
     const g = h.parentElement; g.classList.toggle('closed');
     const c = navClosed(); g.classList.contains('closed') ? c.add(g.dataset.grp) : c.delete(g.dataset.grp);
-    try { localStorage.setItem('uvMasters.menuCerrado', JSON.stringify([...c])); } catch (err) { /* sin almacenamiento */ }
+    try { localStorage.setItem('uvMasters.menuCerrado2', JSON.stringify([...c])); } catch (err) { /* sin almacenamiento */ }
   });
 }
 // Con la categoría plegada, su cabecera resume los números de dentro (rojo si alguno es un error)
@@ -2665,7 +2703,69 @@ function toggleBell(open) {
 }
 
 /* Resumen */
+/* ---------- «El Monstruo»: así llama el equipo a la herramienta. Un guiño que cambia con la época del año ---------- */
+// Para probar una época: localStorage 'uvMasters.epoca' = otono | halloween | navidad | invierno | fallas | primavera | verano
+function epocaDelAnyo(d) {
+  let f = ''; try { f = localStorage.getItem('uvMasters.epoca') || ''; } catch (e) { /* sin almacenamiento */ }
+  if (f) return f;
+  const n = (d.getMonth() + 1) * 100 + d.getDate();
+  if (n >= 1201 || n <= 106) return 'navidad';
+  if (n <= 314) return 'invierno';
+  if (n <= 319) return 'fallas';
+  if (n <= 620) return 'primavera';
+  if (n <= 922) return 'verano';
+  if (n >= 1028 && n <= 1101) return 'halloween';
+  return 'otono';
+}
+const MON = {
+  otono: { c: '#8a72d8', ico: '🍂', f: ['Me he puesto la bufanda: ya huele a castañas.', 'Otoño: caen las hojas, pero las aulas siguen en su sitio.', 'Con este fresquito se cuadran mejor los horarios.', 'He barrido las hojas del Aulario Sur. De nada.'] },
+  halloween: { c: '#7a5cc7', ico: '🎃', f: ['¡Buuu! Tranquilos, solo asusto a los solapes.', 'Esta semana doy un poquito más de miedo de lo normal.', 'Truco o trato: yo pongo el aula, vosotros los caramelos.'] },
+  navidad: { c: '#5fae6b', ico: '🎄', f: ['Jo, jo, jo. Este año me he portado bien: no he pisado ningún Excel.', 'He pedido a los Reyes un curso sin solapes.', 'Felices fiestas, equipo. El turrón, lejos del teclado.', 'Ya huele a vacaciones. Venga, que queda poco.'] },
+  invierno: { c: '#5b8fd9', ico: '❄️', f: ['Qué frío. Yo me quedo aquí dentro, cuidando los horarios.', 'Con gorro se piensa mejor. Probadlo.', 'Un café calentito y a por el día.'] },
+  fallas: { c: '#e2733a', ico: '🔥', f: ['Bones Falles! Prometo no tirar petardos en el Aulario.', 'Huele a pólvora y a buñuelos. Hoy cuadramos pronto.', 'Senyor pirotècnic, pot començar... a revisar els horaris.'] },
+  primavera: { c: '#8a7be8', ico: '🌸', f: ['Me ha salido una flor. Será la primavera.', 'Buen día para abrir las ventanas… y cerrar solapes.', 'Con este sol, hasta UXXI parece simpático.'] },
+  verano: { c: '#35b3a6', ico: '😎', f: ['Con gafas de sol los solapes se ven igual, pero con más estilo.', 'Qué calor. Yo sigo aquí, a la sombra del Aulario.', 'Ya queda menos para las vacaciones.'] },
+};
+function monstruoSvg(ep) {
+  const c = (MON[ep] || MON.otono).c, sombrero = /navidad|invierno|halloween/.test(ep);
+  const cuernos = sombrero ? '' : '<path d="M40 31c-6-7-7-14-3-20 4 4 9 8 13 14z" fill="#f4d58d"/><path d="M80 31c6-7 7-14 3-20-4 4-9 8-13 14z" fill="#f4d58d"/>';
+  const bufanda = col => `<path d="M27 80q33 13 66 0l2 10q-35 14-70 0z" fill="${col}"/><path d="M68 90l11-3 5 19-11 3z" fill="${col}"/><path d="M71 101l11-3M70 96l11-3" stroke="rgba(255,255,255,.55)" stroke-width="2"/>`;
+  const extra = {
+    otono: bufanda('#e58a2e') + '<g class="mfall"><path d="M0 0c5-7 12-7 16-2-4 7-11 9-16 2z" fill="#d9772b" transform="translate(98 6)"/></g><path d="M0 0c5-7 12-7 16-2-4 7-11 9-16 2z" fill="#c9a227" transform="translate(4 100) rotate(-25)"/>',
+    halloween: '<ellipse cx="60" cy="30" rx="38" ry="6.5" fill="#2e2147"/><path d="M40 30L64-6l14 36z" fill="#2e2147"/><path d="M45 23l28 1 2 6H42z" fill="#e58a2e"/>',
+    navidad: '<path d="M28 33Q52-4 100 12Q84 16 90 33z" fill="#d6332f"/><rect x="24" y="27" width="70" height="11" rx="5.5" fill="#fff"/><circle cx="101" cy="12" r="7" fill="#fff"/>' + bufanda('#d6332f'),
+    invierno: '<path d="M30 32Q60-6 90 32z" fill="#e5533d"/><rect x="26" y="27" width="68" height="10" rx="5" fill="#fff"/><circle cx="60" cy="9" r="7" fill="#fff"/>' + bufanda('#f1f4f9') + '<g class="mfall" fill="#fff"><circle cx="104" cy="8" r="2.2"/><circle cx="12" cy="20" r="1.8"/></g>',
+    fallas: '<path d="M30 80h60L60 104z" fill="#2b62c9"/><path d="M38 84h44M45 90h30M52 96h16" stroke="#fff" stroke-width="2" stroke-dasharray="4 4"/>',
+    primavera: '<g transform="translate(84 20)"><circle cx="0" cy="-7" r="5" fill="#f79ac0"/><circle cx="7" cy="-2" r="5" fill="#f79ac0"/><circle cx="4" cy="6" r="5" fill="#f79ac0"/><circle cx="-4" cy="6" r="5" fill="#f79ac0"/><circle cx="-7" cy="-2" r="5" fill="#f79ac0"/><circle r="4" fill="#ffd34d"/></g>',
+    verano: '<rect x="32" y="43" width="26" height="17" rx="7" fill="#1d2633"/><rect x="62" y="43" width="26" height="17" rx="7" fill="#1d2633"/><path d="M56 49h8M32 49l-9-4M88 49l9-4" stroke="#1d2633" stroke-width="3"/><path d="M37 48l6-2M67 48l6-2" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round"/>',
+  }[ep] || '';
+  return `<svg viewBox="-4 -10 128 126" role="img" aria-label="El Monstruo" data-monhola><title>El Monstruo (pulsa para saludar)</title>
+    <ellipse cx="60" cy="110" rx="34" ry="4" fill="rgba(20,35,60,.13)"/>
+    <g class="mbody">
+      <ellipse cx="44" cy="105" rx="11" ry="6" fill="${c}"/><ellipse cx="76" cy="105" rx="11" ry="6" fill="${c}"/>
+      <ellipse cx="20" cy="82" rx="8" ry="11" fill="${c}"/><ellipse class="marm" cx="100" cy="82" rx="8" ry="11" fill="${c}"/>
+      ${cuernos}
+      <path d="M20 76c0-33 14-52 40-52s40 19 40 52c0 20-11 28-40 28S20 96 20 76z" fill="${c}"/>
+      <ellipse cx="60" cy="88" rx="22" ry="12" fill="rgba(255,255,255,.2)"/>
+      <circle cx="33" cy="64" r="5" fill="rgba(255,120,150,.35)"/><circle cx="87" cy="64" r="5" fill="rgba(255,120,150,.35)"/>
+      <g class="meye"><circle cx="46" cy="52" r="11" fill="#fff"/><circle cx="74" cy="52" r="11" fill="#fff"/><circle cx="48" cy="53" r="5" fill="#1d2633"/><circle cx="76" cy="53" r="5" fill="#1d2633"/><circle cx="50" cy="51" r="1.7" fill="#fff"/><circle cx="78" cy="51" r="1.7" fill="#fff"/></g>
+      <path d="M47 67q13 11 26 0" fill="none" stroke="#1d2633" stroke-width="3" stroke-linecap="round"/><path d="M53 70.5l6 1.8-.6 5-5.4-2z" fill="#fff"/>
+      ${extra}
+    </g></svg>`;
+}
+function renderMonstruo(otra) {
+  const el = $('#monstruo'); if (!el) return;
+  const d = new Date(), ep = epocaDelAnyo(d), M = MON[ep] || MON.otono, h = d.getHours();
+  const hola = h < 6 ? 'Buenas noches' : h < 14 ? 'Buenos días' : h < 21 ? 'Buenas tardes' : 'Buenas noches';
+  const act = APP.xl ? D.conflicts.filter(c => !c.accepted).length : null;
+  const frases = M.f.concat(act === 0 ? ['Hoy no muerdo a nadie: cero solapes.', 'Todo en su sitio. Así da gusto ser un monstruo.'] : act ? [`Tengo ${act} solape${act === 1 ? '' : 's'} entre los dientes. ¿Me ${act === 1 ? 'lo' : 'los'} quitáis?`] : []);
+  UI.monN = otra ? (UI.monN + 1) % frases.length : (UI.monN != null ? UI.monN % frases.length : (d.getDate() + d.getMonth()) % frases.length);
+  const nom = userName();
+  el.innerHTML = monstruoSvg(ep) + `<div class="mtxt"><b>${hola}${nom ? ', ' + esc(nom.split(' ')[0]) : ''} ${M.ico}</b><span>${esc(frases[UI.monN])}</span><small>— El Monstruo</small></div>`;
+  if (otra) { const sv = el.querySelector('svg'); if (sv) sv.classList.add('hola'); }
+}
 function renderResumen() {
+  renderMonstruo();
   const act = D.conflicts.filter(c => !c.accepted);
   const L = live();
   let al = '';
@@ -2716,7 +2816,7 @@ function renderOcc() {
   $('#oWhoL').hidden = !week; $('#oAulario').closest('label').hidden = !allRooms; $('#oShow').closest('label').hidden = !allRooms;
   $('#oNextConf').textContent = week ? 'Siguiente semana con solape ▶' : 'Siguiente día con solape ▶';
   if (week) return renderWeek();
-  const date = UI.o.date || (todayISO() >= firstDate() ? todayISO() : firstDate());
+  const date = UI.o.date || proximoDiaConClase();
   UI.o.date = date; $('#oDate').value = date;
   const wd = wdOf(date);
   const rows = new Map();
@@ -2824,7 +2924,7 @@ Clic para ver o cambiar el examen`)}"></div>`; continue; }
 
 // Calendario en modo semana: la semana de un máster o de un aula
 function renderWeek() {
-  const date = UI.o.date || (todayISO() >= firstDate() ? todayISO() : firstDate());
+  const date = UI.o.date || proximoDiaConClase();
   UI.o.date = date; $('#oDate').value = date;
   const monday = mondayOf(date);
   const masters = [...new Set(live().map(s => s.master))].sort();
@@ -2844,6 +2944,12 @@ function renderWeek() {
   $('#occ').innerHTML = weekGrid(monday, items);
 }
 
+// Hoy si hay sesiones de máster; si no, el siguiente día que las tenga (para no abrir el calendario vacío)
+function proximoDiaConClase() {
+  const hoy = todayISO() >= firstDate() ? todayISO() : firstDate();
+  let mejor = null; for (const x of live()) if (x.fecha && x.fecha >= hoy && (!mejor || x.fecha < mejor)) mejor = x.fecha;
+  return mejor || hoy;
+}
 function openGrado(g) {
   const same = APP.grados.filter(x => x.cod === g.cod && x.grp === g.grp).sort((a, b) => a.wd - b.wd || a.a - b.a);
   const masters = live().filter(s => normAula(s.aula) === g.aula && s.fecha && wdOf(s.fecha) === g.wd && g.ini <= s.fecha && s.fecha <= g.fin && s.hi < g.b && g.a < s.hf);
@@ -4900,10 +5006,10 @@ const roomTipo = n => ((D.roomInfo.get(normAula(n)) || {}).tipo || (/\bINF\b|DUA
 const patronOf = s => `${wdOf(s.fecha)}|${s.hi}|${s.hf}`;
 const patronLbl = p => { const [d, a, b] = p.split('|').map(Number); return `${DIA_N[d]} ${hm(a)}–${hm(b)}`; };
 const hm2min = t => { const m = /^(\d{1,2}):(\d{2})/.exec(t || ''); return m ? +m[1] * 60 + +m[2] : null; };
-const nuevoHorario = r => (r.quiere || []).includes('horario') && hm2min(r.nuevaHora) != null;
+const nuevoHorario = r => (r.quiere || []).includes('horario') && (hm2min(r.nuevaHora) != null || !!r.nuevoDia);
 // La sesión movida a otro día de esa misma semana y/o a otra hora (misma duración, salvo que se diga la hora de fin)
 function movedSlot(s, r, dia, hora) {
-  const d = dia != null ? dia : (r.nuevoDia ? +r.nuevoDia : 0), hi = hora != null ? hora : hm2min(r.nuevaHora);
+  const d = dia != null ? dia : (r.nuevoDia ? +r.nuevoDia : 0), hi = hora != null ? hora : (hm2min(r.nuevaHora) != null ? hm2min(r.nuevaHora) : s.hi);
   const fin = hora == null && hm2min(r.nuevaFin) != null ? hm2min(r.nuevaFin) : hi + (s.hf - s.hi);
   return { ...s, fecha: d ? addDays(mondayOf(s.fecha), d - 1) : s.fecha, hi, hf: fin, _from: s };
 }
@@ -5231,24 +5337,115 @@ function filesHelpHtml() {
 }
 function renderAyuda() {
   const sec = (v, icon, what) => `<div class="panel hcard" data-goto="${v}"><b>${icon} ${TITLES[v]}</b><p>${what}</p></div>`;
+  const ir = (v, txt) => `<button class="btn sm" data-goto="${v}">${txt || 'Ir a ' + TITLES[v]}</button>`;
+  const t = (ico, tit, sub, pasos, nota, bot) => `<details><summary><span class="mi">${ico}</span><span>${tit}<small>${sub}</small></span></summary>
+    <ol>${pasos.map(x => `<li>${x}</li>`).join('')}</ol>${nota ? `<p class="mn">${nota}</p>` : ''}${bot ? `<div class="mb">${bot}</div>` : ''}</details>`;
   $('#helpBody').innerHTML = `
-    <div class="hero" style="margin:28px auto 8px"><img class="xano" src="data:image/png;base64,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" alt=""><h2>Para qué sirve</h2>
-      <p>Que el Excel de horarios de los másteres esté siempre bien y que lo que hay en UXXI coincida con él, trabajando varias personas a la vez sin pisarse.</p>
-      <p><button class="btn primary" data-act="tour">Ver la visita guiada</button></p></div>
-    <div class="goals">
-      <div class="panel goal"><b>1 · Ver</b><p>Qué hay en cada aula y cada día, de un vistazo.</p></div>
-      <div class="panel goal"><b>2 · Arreglar</b><p>Encontrar los solapes y mover la asignatura a un aula libre.</p></div>
-      <div class="panel goal"><b>3 · Subir a UXXI</b><p>Saber qué falta por meter en UXXI y marcarlo al hacerlo.</p></div>
-      <div class="panel goal"><b>4 · Cuidar el Excel</b><p>Detectar errores y no perder trabajo de nadie.</p></div>
+    <div class="hero" style="margin:28px auto 8px"><img class="xano" src="data:image/png;base64,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" alt=""><h2>Manual de uso</h2>
+      <p>Todo lo que se puede hacer con la herramienta, paso a paso. Pulsa en lo que quieras hacer y se abren los pasos.</p>
+      <p><button class="btn primary" data-act="tour">Ver la visita guiada (1 minuto)</button> <button class="btn" data-manopen>Abrir todos los pasos</button> <button class="btn" data-manprint>🖨 Imprimir</button></p></div>
+    <h2 class="sec">Lo de cada día</h2>
+    <div class="man">
+      ${t('✉️', 'Un profesor pide otra aula, otro día u otra hora', 'Solicitudes', [
+        'En el <b>Resumen</b> pulsa <b>Un profesor pide un cambio</b> (o en Solicitudes, <b>Nueva solicitud</b>).',
+        'Escribe quién lo pide y elige la asignatura: vale el código, el nombre o el número del máster.',
+        'Elige a qué clases afecta (todas, desde una fecha o una sola) y qué quiere: aula más grande, otro edificio, informática, planta baja o <b>cambio de horario</b>.',
+        'La herramienta enseña las aulas del mismo campus que están libres en <b>todas</b> esas clases: ✓ cumple, ✗ no cumple, ? no se sabe.',
+        'Pulsa <b>Aplicar</b> en la que elijas: se escribe en el Excel y te deja copiada la respuesta para el profesor.'],
+        'Los exámenes («1ª/2ª CONV.») no se mueven con la asignatura: se cambian aparte. Que el profesor esté libre a la nueva hora lo comprobáis vosotros: el Excel no dice quién da cada clase.', ir('solicitudes'))}
+      ${t('✏️', 'Cambiar, añadir o dar de baja una clase de máster', 'Calendario o Sesiones', [
+        'Busca la clase: en el <b>Calendario de aulas</b> (clic en la clase) o en <b>Sesiones</b> (clic en la fila).',
+        'Cambia la fecha, las horas o el aula. Debajo salen las aulas libres a esa hora, primero las que tienen sitio.',
+        'Pulsa <b>Guardar</b>. Se escribe en el Excel en unos segundos.',
+        'Para añadir una clase: botón <b>+ Nueva sesión</b>, arriba a la derecha. Para repetirla la semana siguiente: <b>Duplicar +7 días</b>.',
+        '<b>Dar de baja</b> no borra la fila: pone «B» y «BAJA» para que no se envíe a UXXI.'],
+        'Si lo que cambia es la asignatura entera (todas sus clases), es más rápido hacerlo como una solicitud.', ir('calendario') + ir('sesiones'))}
+      ${t('⚠️', 'Arreglar un solape', 'Dos clases en la misma aula a la vez', [
+        'Entra en <b>Solapes</b>. Cada fila son dos cosas en la misma aula, el mismo día y a horas que se cruzan.',
+        'Pulsa <b>Solucionar</b>: elige cuál de las dos se mueve y un aula libre en todas sus clases (casillas verdes = libre).',
+        'Si es intencionado (por ejemplo, el examen de P1 y P2 juntos), pulsa <b>Aceptar</b> y deja de contar.'],
+        'Solo se proponen aulas del mismo campus que asigna la OCA. Los solapes en aulas especiales van aparte y no cuentan.', ir('solapes'))}
+      ${t('✅', 'Pasar los cambios a UXXI', 'Pendiente de UXXI', [
+        'Todo lo que cambia en el Excel (aquí o a mano) aparece en <b>Pendiente de UXXI</b>, escrito como lo vais a buscar allí.',
+        'Mételo en UXXI como siempre, a mano.',
+        'Pulsa <b>Hecho en UXXI</b> y desaparece de la lista.',
+        'Si lo marcaste sin querer: <b>Deshacer</b>, o en la lista «Marcado como hecho en UXXI».'],
+        'La herramienta nunca entra en UXXI ni guarda vuestras contraseñas: solo os dice qué falta.', ir('uxxi'))}
     </div>
-    <h2 class="sec">Un día normal, en 4 pasos</h2>
-    <ol class="steps">
-      <li>Abre la herramienta y mira el <b>Resumen</b>: los números en rojo o naranja son lo que hay que atender.</li>
-      <li>Si hay <b>Solapes</b>, pulsa <b>Solucionar</b> y elige un aula libre en todas las sesiones.</li>
-      <li>Cuando cambies algo (aquí o a mano en el Excel), aparecerá en <b>Pendiente de UXXI</b>: mételo en UXXI y pulsa <b>Hecho en UXXI</b>.</li>
-      <li>De vez en cuando, mira la <b>Revisión del Excel</b> por si alguna fórmula se ha estropeado.</li>
-    </ol>
-    <p class="lead">Para encontrar algo rápido, usa el <b>buscador de arriba</b> (Ctrl+K): un máster, un aula o una asignatura. Cada máster y cada aula tienen su <b>ficha</b> con todo lo suyo: asignaturas, aulas, semana, problemas y quién la usa.</p>
+    <h2 class="sec">Exámenes y grados</h2>
+    <div class="man">
+      ${t('🟩', 'Cambiar un examen de grado', 'Día, turno o aulas', [
+        'Escribe el código o el nombre en el <b>buscador de arriba</b>, o haz clic en el bloque verde del examen en el Calendario.',
+        'Cambia el día, el turno (mañana o tarde) o las aulas. Las aulas se eligen de una lista: primero las libres, con sus plazas.',
+        'La herramienta comprueba cada aula: másteres, otros exámenes, el cuadrante y si caben los matriculados.',
+        'Al guardar te enseña qué va a cambiar en el Excel de exámenes y en el cuadrante. Si aceptas, lo cambia todo; si algo falla, no cambia nada.'],
+        'También quita el verde del cuadrante que ya no usa nadie y pinta el nuevo.', '<button class="btn sm" data-buscar>Ir al buscador</button>')}
+      ${t('🎓', 'Cambiar una clase de grado', 'Día, hora o aula de todo el cuatrimestre', [
+        'En el <b>Calendario de aulas</b>, haz clic en la clase de grado (las de color crema).',
+        'Pulsa <b>Cambiar esta clase</b> y elige el día, las horas y el aula.',
+        'La herramienta comprueba todo su periodo con los másteres y con las demás clases de grado.',
+        'Si otras titulaciones comparten esa clase, salen marcadas para cambiarlas a la vez. Confirma y se escribe en el Excel de grados.'],
+        'Acordado con la OCA: lo cambia siempre una persona del equipo. Recuerda cambiarlo también en UXXI.', ir('calendario'))}
+      ${t('🗓️', 'Reservar o liberar un aula para un examen de máster', 'Cuadrante de reservas', [
+        'Entra en <b>Revisión del Excel</b> y abre la pestaña del cuadrante de exámenes.',
+        'En los exámenes sin reserva, pulsa <b>Reservar</b> y se pinta la casilla en el cuadrante.',
+        'En las reservas sin examen, pulsa <b>Quitar la reserva</b> si ya no hace falta.',
+        'Si un aula está en verde (examen de grado) y no toca, ahí mismo puedes pintarla, pasarla al otro turno o quitarla.'],
+        'Un aula reservada no se propone para clases a esa hora, salvo para el propio máster.', ir('revision'))}
+    </div>
+    <h2 class="sec">Consultar y revisar</h2>
+    <div class="man">
+      ${t('🔎', 'Encontrar algo rápido', 'Buscador · Ctrl+K', [
+        'Escribe arriba un máster («2212», «MBA»), un aula («O35»), una asignatura o un examen de grado.',
+        'Cada máster y cada aula tienen su <b>ficha</b>: asignaturas, aulas habituales, su semana, sus problemas y quién la usa.'],
+        '', '<button class="btn sm" data-buscar>Ir al buscador</button>')}
+      ${t('📅', 'Ver qué aula está libre', 'Calendario y Edificios', [
+        '<b>Calendario de aulas</b>: un día aula por aula, o la semana entera de un máster o de un aula. Colores = másteres; crema = grados; verde = exámenes de grado.',
+        '<b>Edificios</b>: cada edificio planta a planta, con las aulas libres y ocupadas a la hora que elijas.'],
+        '', ir('calendario') + ir('edificios'))}
+      ${t('🔍', 'Revisar los Excel', 'Lo que no cuadra, de uno en uno', [
+        'En <b>Revisión del Excel</b> hay una pestaña por cada Excel, con lo que no cuadra.',
+        'Cada aviso dice la hoja y la fila. Muchos se arreglan con un botón; el resto, en el Excel.',
+        'Si un aviso está bien como está, pulsa <b>✓ Es correcto</b>: deja de avisar a todo el equipo.',
+        'Con <b>⚙ Qué mostrar</b> elegís qué avisos se ven (Ontinyent, Facultat de Dret, los que no son errores), para no agobiarse.'],
+        'Lo que es de más adelante (por defecto, a más de un mes) se pliega al final: aún no toca.', ir('revision') + ir('encaje'))}
+      ${t('🚫', 'Un aula que no sirve para algo', 'Normas de aulas', [
+        'Desde la ficha del aula o desde <b>Normas de aulas</b>, márcala como «no sugerir» y escribe el motivo.',
+        'Deja de proponerse en solapes, cambios y solicitudes. Queda apuntado quién lo decidió y por qué.'],
+        '', ir('normas'))}
+    </div>
+    <h2 class="sec">Si algo va mal</h2>
+    <div class="man">
+      ${t('↩️', 'Me he equivocado', 'Deshacer e Historial', [
+        'Botón <b>Deshacer</b> (arriba a la derecha): deshace tu último cambio.',
+        'Para un cambio de otra persona o de otro día: <b>Historial</b>. Ahí está quién cambió qué y cuándo.',
+        'El Historial guarda una copia de cada versión del Excel, por si hay que recuperar algo.'],
+        '', ir('historial'))}
+      ${t('📂', 'No encuentra un archivo o pide permiso', 'Carpeta y archivos', [
+        '«Empezar» o «Dar permiso» cada día es normal: es el navegador. Elige «Permitir en cada visita».',
+        'Si falta un archivo (alguien lo movió o le cambió el nombre), ve a <b>Carpeta y archivos</b> y pulsa el botón que sale junto a ese archivo.',
+        'En <b>Usuarios</b> se ve a quién le funcionan los archivos y qué versión usa cada uno.'],
+        '', ir('carpeta') + ir('usuarios'))}
+      ${t('📦', 'Enviar una copia para que la revisen', 'Sin tocar vuestros archivos', [
+        'En <b>Carpeta y archivos</b> pulsa <b>📦 Crear la copia</b>.',
+        'Se guarda un único archivo .zip con vuestros Excel y la memoria de la herramienta. Solo lee: no cambia nada.',
+        'Súbelo donde os hayan dicho (por ejemplo, la carpeta compartida del Drive).'],
+        '', ir('carpeta'))}
+      ${t('👁', 'Abrir sin riesgo de cambiar nada', 'Solo mirar', [
+        'En <b>Carpeta y archivos</b> pulsa <b>Solo mirar</b>.',
+        'Se puede ver y buscar todo, pero la herramienta no guarda nada. Sirve para enseñarla o para mirar una copia.',
+        'Para volver a trabajar, pulsa <b>Salir de «Solo mirar»</b>.'],
+        '', ir('carpeta'))}
+    </div>
+    <h2 class="sec">Seis cosas que conviene saber</h2>
+    <div class="panel pad"><ol class="saber">
+      <li><b>Los Excel siguen siendo vuestros.</b> Cada cambio se escribe en el Excel que toca, en unos segundos y sin estropear el formato ni las fórmulas.</li>
+      <li><b>Podéis seguir cambiando a mano en Excel.</b> La herramienta lo detecta, lo vuelve a leer y avisa a todos de qué cambió.</li>
+      <li><b>Nadie pisa a nadie.</b> Si dos personas guardan a la vez, va uno y luego el otro. Si alguien tiene el Excel abierto, espera a que lo cierre.</li>
+      <li><b>UXXI se cambia siempre a mano.</b> La herramienta solo lleva la cuenta de lo que falta.</li>
+      <li><b>Se actualiza sola.</b> Cuando hay versión nueva, al abrirla sale «✨ Herramienta actualizada». No hay que copiar nada.</li>
+      <li><b>El botón «?»</b> junto al título explica la pantalla en la que estás, y la 🔔 enseña lo que han hecho los demás.</li>
+    </ol></div>
     <h2 class="sec">Qué hay en cada apartado</h2>
     <div class="hgrid">
       ${sec('encaje', '🧩', 'El mapa de vuestros Excel: qué hace cada uno y qué no cuadra entre ellos. Empieza por aquí si es la primera vez.')}
@@ -5264,11 +5461,10 @@ function renderAyuda() {
     </div>
     ${filesHelpHtml()}
     <h2 class="sec">Lo que viene: grados</h2>
-    <div class="panel pad lov"><p>Cuando los Excel estén más limpios (se verá en «Cómo encaja todo»), la idea es ampliar la herramienta a los grados en tres pasos:</p>
-      <ol><li><b>Ver y validar</b> (sin tocar el Excel de grados): sus solapes en Solapes, «Aceptar» con el motivo (clase compartida, grupos juntos, fila duplicada, error) y una revisión más completa de su Excel.</li>
-      <li><b>Aprender las normas</b>: con lo validado, la herramienta propone reglas («estas dos titulaciones comparten esta asignatura») y vosotros las aprobáis.</li>
-      <li><b>Editarlo</b>: cambiar día, hora o aula de un grupo para todo el cuatrimestre (siempre CAULA y AULA a la vez) y atender las peticiones de profesores de grado. Antes, acordarlo con la unidad que lleva ese Excel.</li></ol>
-      <p class="muted">Hoy (27/10/2026) hay 95 choques entre clases de grado; 51 son la misma asignatura a la misma hora (clases mezcladas). Esperamos que bajen al limpiar los Excel.</p></div>
+    <div class="panel pad lov"><p>Ya se puede <b>cambiar una clase de grado</b> y <b>un examen de grado</b>. Lo siguiente, cuando lo pidáis:</p>
+      <ol><li><b>Ver y validar sus solapes</b>: «Aceptar» con el motivo (clase compartida, grupos juntos, fila duplicada, error).</li>
+      <li><b>Aprender las normas</b>: con lo validado, la herramienta propone reglas y vosotros las aprobáis.</li>
+      <li><b>Preparar la carga de UXXI</b> ya comprobada, sin solapes.</li></ol></div>
     <h2 class="sec">Preguntas frecuentes</h2>
     <div class="faq">
       <details><summary>¿Puedo seguir usando el Excel como siempre?</summary><p>Sí. Los Excel siguen siendo vuestros. Si alguien guarda a mano, la herramienta lo detecta, lo vuelve a leer y avisa a todos de qué cambió.</p></details>
@@ -5304,7 +5500,7 @@ const TOUR = [
   { sel: '[data-view="uxxi"]', t: 'Pendiente de UXXI', x: 'Lo que hay que meter a mano en UXXI. Cuando lo metáis, pulsad "Hecho en UXXI".' },
   { sel: '[data-view="solicitudes"]', t: 'Solicitudes', x: 'Cuando un profesor pida otra aula (más grande, en otro edificio, de informática…), apúntalo aquí: la herramienta busca las aulas que cumplen y están libres en todas sus fechas, lo aplica en el Excel y te prepara la respuesta.' },
   { sel: '#newBtn', t: 'Cambios', x: 'Cualquier cambio que guardes aquí se escribe en el Excel en unos segundos. Si alguien lo tiene abierto, espera a que lo cierre.' },
-  { sel: '[data-view="ayuda"]', t: 'Cómo funciona', x: 'Aquí tienes la explicación de cada apartado y de cada archivo. Puedes volver a ver esta visita cuando quieras.' },
+  { sel: '[data-view="ayuda"]', t: 'Manual de uso', x: 'Aquí tienes, paso a paso, todo lo que se puede hacer. Puedes volver a ver esta visita cuando quieras.' },
 ];
 function tour(i) {
   const shade = $('#tourShade'), pop = $('#tourPop');
@@ -5388,7 +5584,7 @@ function updatePreview() {
   }
   const mine = (catOf(d.aula) || {}).aulario;
   const order = [...groups.keys()].sort((a, b) => (b === mine) - (a === mine) || a.localeCompare(b));
-  $('#d_free').innerHTML = `<div class="box"><h3>Aulas libres para esta sesión</h3>${order.map(k => `<details ${k === mine ? 'open' : ''}><summary>${esc(k)} (${groups.get(k).size})</summary><div class="chips">${[...groups.get(k)].sort((a, b) => a.localeCompare(b, 'es', { numeric: true })).map(n => `<button type="button" class="chip" data-room="${esc(n)}">${esc(n)}${D.caps.get(normAula(n)) ? ' · ' + esc(D.caps.get(normAula(n))) : ''}</button>`).join('')}</div></details>`).join('') || 'Ninguna.'}</div>`;
+  $('#d_free').innerHTML = `<div class="box"><h3>Aulas libres para esta sesión</h3>${order.map(k => `<details ${k === mine ? 'open' : ''}><summary>${esc(k)} (${groups.get(k).size})</summary><div class="chips">${[...groups.get(k)].sort((a, b) => { const c = x => +D.caps.get(normAula(x)) || 0, ya = +D.caps.get(normAula(d.aula)) || 0, pa = ya && c(a) < ya ? 1 : 0, pb = ya && c(b) < ya ? 1 : 0; return pa - pb || (pa ? c(b) - c(a) : c(a) - c(b)) || a.localeCompare(b, 'es', { numeric: true }); }).map(n => `<button type="button" class="chip" data-room="${esc(n)}">${esc(n)}${D.caps.get(normAula(n)) ? ' · ' + esc(D.caps.get(normAula(n))) : ''}</button>`).join('')}</div></details>`).join('') || 'Ninguna.'}</div>`;
 }
 function saveForm() {
   const d = readForm();
@@ -5539,6 +5735,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     const tg = t.closest('[data-tour]'); if (tg) return tour(+tg.dataset.tour);
     if (t.closest('[data-reqnew]')) return openRequest(null);
+    if (t.closest('[data-buscar]')) { $('#gq').focus(); return; }
+    if (t.closest('[data-monhola]')) return renderMonstruo(true);
+    if (t.closest('[data-manopen]') || t.closest('[data-manprint]')) { const ds = [...document.querySelectorAll('.man details')], abrir = !!t.closest('[data-manprint]') || ds.some(d => !d.open); ds.forEach(d => { d.open = abrir; }); const b = document.querySelector('[data-manopen]'); if (b) b.textContent = abrir ? 'Cerrar todos los pasos' : 'Abrir todos los pasos'; if (t.closest('[data-manprint]')) window.print(); return; }
     const aed = t.closest('[data-aedit]'); if (aed) return openAulaEdit(aed.dataset.aedit);
     const rqm = t.closest('[data-reqmaster]'); if (rqm) { openRequest(null); const i = UI.reqSubj.findIndex(x => x.master === rqm.dataset.reqmaster && x.codigo === '*'); $('#rqSubj').value = i; reqFillSubject(true); return updateRequest(); }
     const pf = t.closest('[data-pickfile]'); if (pf) return pickRoleFile(pf.dataset.pickfile);

@@ -1,10 +1,10 @@
 {
- "version": "2026-11-14 00:57",
- "notas": "Arreglos tras la revisión: detecta CAULA y AULA distintas (filas 2421 y 2509 del horario de grados), quita avisos que no eran errores, corrige la pantalla Usuarios y la copia para revisión.",
- "publicada": "2026-11-13T23:57:35.431Z",
+ "version": "2026-11-14 10:49",
+ "notas": "Manual de uso dentro de la herramienta (paso a paso), menu mas sencillo en tres grupos, accesos rapidos en el Resumen, arreglo del cambio de horario con solo el dia y un saludo de El Monstruo",
+ "publicada": "2026-11-14T09:50:21.491Z",
  "app": {
   "file": "app.html",
-  "sha256": "d06a307cbd61db1862383aa932e37d39c6d8ce6d41c1f7e91d9c55cc91a2947f",
-  "firma": "HQ2iIs6npqo7DxVRRc2J9C6LLPD8iQP-fJPexRHGKf0VhVaOavr2oOJavGq80CmuEWkljeffZbPefgi-EUYRhw"
+  "sha256": "46474f6487a820d2880496ff6bd18fb9ad03774556eb03fd4537965330e53904",
+  "firma": "wu8vp4dvYgu0r4C4jsRvQoflbXhX9nfbeh2pxQmbvYLmeTQRt7G1yvo0gWwh_-fLuAJy6kSEuUSc1TOHFYqRqQ"
  }
 }
